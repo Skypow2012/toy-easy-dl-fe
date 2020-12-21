@@ -279,7 +279,7 @@ export const BasicList: FC<BasicListProps> = (props) => {
                   <List.Item.Meta
                     // avatar={<Avatar src={item.logo} shape="square" size="large" />}
                     title={<a href={`/infer?model=${item.name}`}>{item.name}</a>}
-                    description={item.subDescription}
+                    description={`${item.classes.join('、')}`}
                   />
                   <ListContent data={item} />
                 </List.Item>;

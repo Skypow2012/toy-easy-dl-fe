@@ -8,6 +8,7 @@ export interface BasicListItemDataType {
   id: string;
   owner: string;
   name: string;
+  classes: string[];
   title: string;
   avatar: string;
   cover: string;

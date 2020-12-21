@@ -73,7 +73,8 @@ const Model: ModelType = {
             return;
           }
         }
-        history.replace(redirect || '/');
+        // history.replace(redirect || '/');
+        history.replace('/');
       }
     },
 
