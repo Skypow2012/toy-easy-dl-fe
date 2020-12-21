@@ -6,10 +6,21 @@ interface ParamsType extends Partial<BasicListItemDataType> {
 }
 
 export async function queryFakeList(params: ParamsType) {
-  return request('/api/fake_list', {
+  return request('/ToyEasyDL/model', {
     params,
   });
 }
+
+export async function queryModelList() {
+  return request('/ToyEasyDL/model');
+}
+
+export async function deleteModel(modelName: string) {
+  return request(`/ToyEasyDL/model?modelName=${modelName}`, {
+    method: 'DELETE',
+  });
+}
+
 
 export async function removeFakeList(params: ParamsType) {
   const { count = 5, ...restParams } = params;

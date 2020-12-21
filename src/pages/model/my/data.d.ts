@@ -7,6 +7,7 @@ export interface Member {
 export interface BasicListItemDataType {
   id: string;
   owner: string;
+  name: string;
   title: string;
   avatar: string;
   cover: string;

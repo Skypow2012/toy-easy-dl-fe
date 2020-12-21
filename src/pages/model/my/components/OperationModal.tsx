@@ -73,9 +73,9 @@ const OperationModal: FC<OperationModalProps> = (props) => {
     return (
       <Form {...formLayout} form={form} onFinish={handleFinish}>
         <Form.Item
-          name="title"
-          label="任务名称"
-          rules={[{ required: true, message: '请输入任务名称' }]}
+          name="name"
+          label="模型名称"
+          rules={[{ required: true, message: '请输入模型名称' }]}
         >
           <Input placeholder="请输入" />
         </Form.Item>
@@ -93,8 +93,8 @@ const OperationModal: FC<OperationModalProps> = (props) => {
         </Form.Item>
         <Form.Item
           name="owner"
-          label="任务负责人"
-          rules={[{ required: true, message: '请选择任务负责人' }]}
+          label="模型负责人"
+          rules={[{ required: false, message: '请选择负责人' }]}
         >
           <Select placeholder="请选择">
             {
