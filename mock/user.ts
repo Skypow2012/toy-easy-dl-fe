@@ -17,13 +17,13 @@ async function getFakeCaptcha(req: Request, res: Response) {
 export default {
   // 支持值为 Object 和 Array
   'GET /api/currentUser': {
-    name: '皮卡丘',
+    name: '炼丹师',
     avatar: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=76593842,145993857&fm=26&gp=0.jpg',
     userid: '00000001',
-    email: 'antdesign@alipay.com',
+    email: '541182180@qq.com',
     signature: '',
-    title: '炼丹师',
-    group: '某某某事业群－某某平台部－某某技术部－UED',
+    title: '初级锅炉工',
+    group: '炼丹联盟-锅炉工作组',
     tags: [
       {
         key: '0',
@@ -31,23 +31,15 @@ export default {
       },
       {
         key: '1',
-        label: '专注设计',
+        label: '异想天开的',
       },
       {
         key: '2',
-        label: '辣~',
+        label: '带电~',
       },
       {
         key: '3',
-        label: '大长腿',
-      },
-      {
-        key: '4',
-        label: '川妹子',
-      },
-      {
-        key: '5',
-        label: '海纳百川',
+        label: '发呆中...',
       },
     ],
     notifyCount: 0,
