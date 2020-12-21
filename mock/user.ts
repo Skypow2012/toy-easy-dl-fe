@@ -17,13 +17,13 @@ async function getFakeCaptcha(req: Request, res: Response) {
 export default {
   // 支持值为 Object 和 Array
   'GET /api/currentUser': {
-    name: 'Serati Ma',
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+    name: '皮卡丘',
+    avatar: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=76593842,145993857&fm=26&gp=0.jpg',
     userid: '00000001',
     email: 'antdesign@alipay.com',
-    signature: '海纳百川，有容乃大',
-    title: '交互专家',
-    group: '蚂蚁集团－某某某事业群－某某平台部－某某技术部－UED',
+    signature: '',
+    title: '炼丹师',
+    group: '某某某事业群－某某平台部－某某技术部－UED',
     tags: [
       {
         key: '0',
@@ -50,8 +50,8 @@ export default {
         label: '海纳百川',
       },
     ],
-    notifyCount: 12,
-    unreadCount: 11,
+    notifyCount: 0,
+    unreadCount: 0,
     country: 'China',
     geographic: {
       province: {
@@ -63,8 +63,8 @@ export default {
         key: '330100',
       },
     },
-    address: '西湖区工专路 77 号',
-    phone: '0752-268888888',
+    address: '余杭区向往街1122号欧美金融城英国中心东楼',
+    phone: '0571-888888888',
   },
   // GET POST 可省略
   'GET /api/users': [

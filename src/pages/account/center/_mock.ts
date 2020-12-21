@@ -210,8 +210,8 @@ export default {
         memberLink: '',
       },
     ],
-    notifyCount: 12,
-    unreadCount: 11,
+    notifyCount: 0,
+    unreadCount: 0,
     country: 'China',
     geographic: {
       province: {

@@ -2,13 +2,15 @@
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
-const { REACT_APP_ENV } = process.env;
+const { REACT_APP_ENV, PUBLIC_PATH ='/' } = process.env;
 export default defineConfig({
   hash: true,
   antd: {},
   dva: {
     hmr: true,
   },
+  publicPath: PUBLIC_PATH,
+  base: PUBLIC_PATH,
   history: {
     type: 'browser',
   },
@@ -296,22 +298,10 @@ export default defineConfig({
                   redirect: '/editor/flow',
                 },
                 {
-                  name: 'flow',
-                  icon: 'smile',
-                  path: '/editor/flow',
-                  component: './editor/flow',
-                },
-                {
                   name: 'mind',
                   icon: 'smile',
                   path: '/editor/mind',
                   component: './editor/mind',
-                },
-                {
-                  name: 'koni',
-                  icon: 'smile',
-                  path: '/editor/koni',
-                  component: './editor/koni',
                 },
               ],
             },
