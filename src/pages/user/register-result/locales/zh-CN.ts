@@ -1,7 +1,7 @@
 export default {
   'userandregister-result.login.userName': '用户名',
   'userandregister-result.login.password': '密码',
-  'userandregister-result.login.message-invalid-credentials': '账户或密码错误（admin/ant.design）',
+  'userandregister-result.login.message-invalid-credentials': '账户或密码错误（admin/toy.2020）',
   'userandregister-result.login.message-invalid-verification-code': '验证码错误',
   'userandregister-result.login.tab-login-credentials': '账户密码登录',
   'userandregister-result.login.tab-login-mobile': '手机号登录',
