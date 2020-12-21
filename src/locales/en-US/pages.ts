@@ -1,8 +1,7 @@
 export default {
-  'pages.layouts.userLayout.title':
-    'Ant Design is the most influential web design specification in Xihu district',
+  'pages.layouts.userLayout.title': '',
   'pages.login.accountLogin.tab': 'Account Login',
-  'pages.login.accountLogin.errorMessage': 'Incorrect username/password（admin/ant.design)',
+  'pages.login.accountLogin.errorMessage': 'Incorrect username/password（admin/toy.2020)',
   'pages.login.username.placeholder': 'Username: admin or user',
   'pages.login.username.required': 'Please input your username!',
   'pages.login.password.placeholder': 'Password: ant.design',
