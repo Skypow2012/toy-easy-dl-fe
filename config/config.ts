@@ -72,198 +72,79 @@ export default defineConfig({
           routes: [
             {
               path: '/',
-              redirect: '/dashboard/analysis',
+              redirect: '/model/my',
             },
             {
-              path: '/dashboard',
-              name: 'dashboard',
+              path: '/model',
+              name: 'model',
               icon: 'dashboard',
-              routes: [
-                {
-                  path: '/',
-                  redirect: '/dashboard/analysis',
-                },
-                {
-                  name: 'analysis',
-                  icon: 'smile',
-                  path: '/dashboard/analysis',
-                  component: './dashboard/analysis',
-                },
-                {
-                  name: 'monitor',
-                  icon: 'smile',
-                  path: '/dashboard/monitor',
-                  component: './dashboard/monitor',
-                },
-                {
-                  name: 'workplace',
-                  icon: 'smile',
-                  path: '/dashboard/workplace',
-                  component: './dashboard/workplace',
-                },
-              ],
+              routes: [{
+                name: 'my',
+                path: '/model/my',
+                component: './model/my',
+              }, {
+                name: 'create',
+                path: '/model/create',
+                component: './model/create',
+              }, {
+                name: 'train',
+                path: '/model/train',
+                // component: './model/train',
+              }, {
+                name: 'infer',
+                path: '/model/infer',
+                // component: './model/infer',
+              }, {
+                name: 'push',
+                path: '/model/push',
+                // component: './model/push',
+              },]
             },
             {
-              path: '/form',
+              path: '/data',
+              name: 'data',
               icon: 'form',
-              name: 'form',
-              routes: [
-                {
-                  path: '/',
-                  redirect: '/form/basic-form',
-                },
-                {
-                  name: 'basic-form',
-                  icon: 'smile',
-                  path: '/form/basic-form',
-                  component: './form/basic-form',
-                },
-                {
-                  name: 'step-form',
-                  icon: 'smile',
-                  path: '/form/step-form',
-                  component: './form/step-form',
-                },
-                {
-                  name: 'advanced-form',
-                  icon: 'smile',
-                  path: '/form/advanced-form',
-                  component: './form/advanced-form',
-                },
-              ],
+              routes: [{
+                name: 'show',
+                path: '/data/show',
+                // component: './data/show',
+              }, {
+                name: 'tag-manage',
+                path: '/data/tag/manage',
+                // component: './data/tag/manage',
+              }, {
+                name: 'tag-online',
+                path: '/data/tag/online',
+                // component: './data/tag/online',
+              }, {
+                name: 'cloud',
+                path: '/data/cloud',
+                // component: './data/cloud',
+              }]
             },
             {
-              path: '/list',
-              icon: 'table',
-              name: 'list',
-              routes: [
-                {
-                  path: '/list/search',
-                  name: 'search-list',
-                  component: './list/search',
-                  routes: [
-                    {
-                      path: '/list/search',
-                      redirect: '/list/search/articles',
-                    },
-                    {
-                      name: 'articles',
-                      icon: 'smile',
-                      path: '/list/search/articles',
-                      component: './list/search/articles',
-                    },
-                    {
-                      name: 'projects',
-                      icon: 'smile',
-                      path: '/list/search/projects',
-                      component: './list/search/projects',
-                    },
-                    {
-                      name: 'applications',
-                      icon: 'smile',
-                      path: '/list/search/applications',
-                      component: './list/search/applications',
-                    },
-                  ],
-                },
-                {
-                  path: '/',
-                  redirect: '/list/table-list',
-                },
-                {
-                  name: 'table-list',
-                  icon: 'smile',
-                  path: '/list/table-list',
-                  component: './list/table-list',
-                },
-                {
-                  name: 'basic-list',
-                  icon: 'smile',
-                  path: '/list/basic-list',
-                  component: './list/basic-list',
-                },
-                {
-                  name: 'card-list',
-                  icon: 'smile',
-                  path: '/list/card-list',
-                  component: './list/card-list',
-                },
-              ],
-            },
-            {
-              path: '/profile',
-              name: 'profile',
-              icon: 'profile',
-              routes: [
-                {
-                  path: '/',
-                  redirect: '/profile/basic',
-                },
-                {
-                  name: 'basic',
-                  icon: 'smile',
-                  path: '/profile/basic',
-                  component: './profile/basic',
-                },
-                {
-                  name: 'advanced',
-                  icon: 'smile',
-                  path: '/profile/advanced',
-                  component: './profile/advanced',
-                },
-              ],
-            },
-            {
-              name: 'result',
+              path: '/deployment',
+              name: 'deployment',
               icon: 'CheckCircleOutlined',
-              path: '/result',
-              routes: [
-                {
-                  path: '/',
-                  redirect: '/result/success',
-                },
-                {
-                  name: 'success',
-                  icon: 'smile',
-                  path: '/result/success',
-                  component: './result/success',
-                },
-                {
-                  name: 'fail',
-                  icon: 'smile',
-                  path: '/result/fail',
-                  component: './result/fail',
-                },
-              ],
+              routes: [{
+                name: 'local',
+                path: '/deployment/local',
+                // component: './deployment/local',
+              }]
             },
             {
-              name: 'exception',
-              icon: 'warning',
-              path: '/exception',
-              routes: [
-                {
-                  path: '/',
-                  redirect: '/exception/403',
-                },
-                {
-                  name: '403',
-                  icon: 'smile',
-                  path: '/exception/403',
-                  component: './exception/403',
-                },
-                {
-                  name: '404',
-                  icon: 'smile',
-                  path: '/exception/404',
-                  component: './exception/404',
-                },
-                {
-                  name: '500',
-                  icon: 'smile',
-                  path: '/exception/500',
-                  component: './exception/500',
-                },
-              ],
+              path: '/ai-market',
+              name: 'ai-market',
+              icon: 'RobotOutlined',
+              routes: [{
+                name: 'my',
+                path: '/ai-market/my',
+                // component: './ai/my',
+              }, {
+                name: 'sell',
+                path: '/ai-market/sell',
+                // component: './ai/sell',
+              }]
             },
             {
               name: 'account',
@@ -273,12 +154,6 @@ export default defineConfig({
                 {
                   path: '/',
                   redirect: '/account/center',
-                },
-                {
-                  name: 'center',
-                  icon: 'smile',
-                  path: '/account/center',
-                  component: './account/center',
                 },
                 {
                   name: 'settings',

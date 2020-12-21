@@ -45,7 +45,7 @@ class SecurityView extends Component {
       description: `${formatMessage(
         { id: 'accountandsettings.security.phone-description' },
         {},
-      )}：138****8293`,
+      )}：188****6263`,
       actions: [
         <a key="Modify">
           <FormattedMessage id="accountandsettings.security.modify" defaultMessage="Modify" />
@@ -66,7 +66,7 @@ class SecurityView extends Component {
       description: `${formatMessage(
         { id: 'accountandsettings.security.email-description' },
         {},
-      )}：ant***sign.com`,
+      )}：541***qq.com`,
       actions: [
         <a key="Modify">
           <FormattedMessage id="accountandsettings.security.modify" defaultMessage="Modify" />
