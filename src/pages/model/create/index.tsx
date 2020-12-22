@@ -204,7 +204,7 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
                 },
               ]}
             >
-              <Radio.Group>
+              <Radio.Group disabled={initialValues.isEdit}>
                 <Radio.Button value="POST" onClick={()=>{setRequestMethod('POST');}}>POST</Radio.Button>
                 <Radio.Button value="GET" onClick={()=>{setRequestMethod('GET');}}>GET</Radio.Button>
               </Radio.Group>
