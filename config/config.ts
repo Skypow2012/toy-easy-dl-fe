@@ -113,7 +113,7 @@ export default defineConfig({
               }, {
                 name: 'tag-manage',
                 path: '/data/tag/manage',
-                component: './data/tag/manage',
+                // component: './data/tag/manage',
               }, {
                 name: 'tag-online',
                 path: '/data/tag/online',

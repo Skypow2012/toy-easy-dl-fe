@@ -92,19 +92,48 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
   }
+  function smaller(base64Urls: any[], cb: any) {
+    if (!base64Urls.length) return cb(base64Urls);
+    let cnt = 0;
+    for (let i = 0; i < base64Urls.length; i++) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = document.createElement('img');
+      img.src = base64Urls[i];
+      img.onload = () => {
+        canvas.width = 32;
+        canvas.height = 32;
+        ctx.drawImage(img, 0, 0, 32, 32);
+        // document.body.appendChild(canvas);
+        base64Urls[i] = canvas.toDataURL();
+        if (++cnt === base64Urls.length) {
+          cb(base64Urls);
+        }
+      }
+    }
+    return undefined;
+  }
   function handleChange(info: any) {
+    if (info.fileList.length) {
+      info.fileList[0].status = 'done';
+    } else {
+      return;
+    }
     if (info.file.status === 'done') {
       dispatch({type: "modelInfer/updateInferLoading", payload: true});
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, (imageUrl: any) => {
         // console.log(imageUrl);
-        setModelImgBase64(imageUrl);
-        dispatch({
-          type: 'modelInfer/infer',
-          payload: {
-            modelName,
-            base64: imageUrl,
-          }
+        smaller([imageUrl], (smallBase64Urls: any[])=>{
+          const smallImageUrl = smallBase64Urls[0];
+          setModelImgBase64(smallImageUrl);
+          dispatch({
+            type: 'modelInfer/infer',
+            payload: {
+              modelName,
+              base64: smallImageUrl,
+            }
+          });
         });
       });
     }
@@ -123,6 +152,7 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
     const imgWindow = window.open(src);
     imgWindow.document.write(image.outerHTML);
   };
+
   return (
     <PageContainer content={<FormattedMessage id="formandbasic-form.infer.description" />}>
       <Card bordered={false}>
@@ -131,6 +161,8 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
             listType="picture-card"
             onChange={handleChange}
             onPreview={onPreview}
+            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            customRequest={()=>{}}
             onRemove={()=>{
               setModelImgBase64('');
               dispatch({type: 'modelInfer/updateInferResult', payload: {}});
@@ -142,7 +174,7 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
         </Spin>
         <div className={styles.resultBox}>
           {!Object.keys(inferResult).length?null:Object.keys(inferResult).map((className)=>{
-            return <div>
+            return <div key={className}>
               <span>{className}</span>
               <span style={{float:'right'}}>{
                 `${(inferResult[className] * 100).toFixed(2)}%`
