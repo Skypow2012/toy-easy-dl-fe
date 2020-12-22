@@ -1,0 +1,18 @@
+export default {
+  'formandbasic-form.infer.description':'选择图片，然后来验证模型效果',
+  'formandbasic-form.form.infer':'推导图片',
+  'formandbasic-form.form.train':'开始训练',
+  'formandbasic-form.create.description':'填写模型相关信息，然后点击开始训练',
+  'formandbasic-form.model-type.required': '请输入模型类型',
+  'formandbasic-form.title.required': '请输入模型名称',
+  'formandbasic-form.classes.required': '请选择模型分类',
+  'formandbasic-form.model-type.label': '模型类型',
+  'formandbasic-form.model-type.placeholder': '选择模型类型',
+  'formandbasic-form.model-type.img-classification': '图像分类',
+  'formandbasic-form.title.label': '模型名称',
+  'formandbasic-form.belong.label': '模型归属',
+  'formandbasic-form.belong.company': '公司',
+  'formandbasic-form.belong.person': '个人',
+  'formandbasic-form.title.placeholder': '给模型起个名字',
+  'formandbasic-form.classes.label': '模型分类',
+};

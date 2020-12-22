@@ -18,7 +18,7 @@ export interface StateType {
   classes: [];
 }
 const Model: ModelType = {
-  namespace: 'modelCreate',
+  namespace: 'modelInfer',
 
   state: {
     classes: [],

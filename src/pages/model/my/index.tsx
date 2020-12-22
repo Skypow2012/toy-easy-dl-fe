@@ -9,6 +9,7 @@ import {
   Input,
   List,
   Menu,
+  Item,
   Modal,
   Progress,
   Radio,
@@ -61,7 +62,11 @@ const ListContent = ({
       <p>{moment(createdAt).format('YYYY-MM-DD HH:mm')}</p>
     </div>
     <div className={styles.listContentItem}>
-      <Progress percent={percent!==undefined?percent:100} status={status} strokeWidth={6} style={{ width: 180 }} />
+      {
+        percent!==undefined ?
+          <Progress percent={percent} status={status} strokeWidth={6} style={{ width: 180 }} />
+          : <Progress percent={100} status={status} strokeWidth={6} style={{ width: 180 }} />
+      }
     </div>
   </div>
 );
@@ -121,8 +126,8 @@ export const BasicList: FC<BasicListProps> = (props) => {
         modelName += '.wait';
       }
       Modal.confirm({
-        title: '删除任务',
-        content: '确定删除该任务吗？',
+        title: '删除模型',
+        content: '确定删除该模型吗？',
         okText: '确认',
         cancelText: '取消',
         onOk: () => deleteItem(modelName),
@@ -255,15 +260,19 @@ export const BasicList: FC<BasicListProps> = (props) => {
                 if (limitType === 2 && item.percent !== undefined) return null;
                 if (searchText && item.name.indexOf(searchText) === -1) return null;
                 return <List.Item
+                  key={item.name}
                   actions={[
                     <a
                       key="edit"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        showEditModal(item);
+                      style={{color:item.percent === undefined?undefined:'#ccc'}}
+                      onClick={() => {
+                        // e.preventDefault();
+                        // showEditModal(item);
+                        if (item.percent !== undefined) return;
+                        window.location.href = `/toy-easy-dl-fe/model/infer/?modelName=${item.name}`;
                       }}
                     >
-                      编辑
+                      验证
                     </a>,
                     <a
                       key="del"
@@ -271,6 +280,7 @@ export const BasicList: FC<BasicListProps> = (props) => {
                         e.preventDefault();
                         editAndDelete('delete', item);
                       }}
+                      style={{color:'red'}}
                     >
                       删除
                     </a>,

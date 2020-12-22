@@ -2,7 +2,7 @@
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
-const { REACT_APP_ENV, PUBLIC_PATH ='/' } = process.env;
+const { REACT_APP_ENV, PUBLIC_PATH ='/toy-easy-dl-fe/' } = process.env;
 export default defineConfig({
   hash: true,
   antd: {},
@@ -86,14 +86,16 @@ export default defineConfig({
                 name: 'create',
                 path: '/model/create',
                 component: './model/create',
-              }, {
-                name: 'train',
-                path: '/model/train',
-                // component: './model/train',
-              }, {
+              },
+              // {
+              //   name: 'train',
+              //   path: '/model/train',
+              //   component: './model/train',
+              // },
+              {
                 name: 'infer',
                 path: '/model/infer',
-                // component: './model/infer',
+                component: './model/infer',
               }, {
                 name: 'push',
                 path: '/model/push',

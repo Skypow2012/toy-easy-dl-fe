@@ -13,24 +13,24 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
-interface ModelCreateFormProps {
+interface modelTrainFormProps {
   submitting: boolean;
   dispatch: Dispatch<any>;
-  modelCreate: StateType;
+  modelTrain: StateType;
 }
 
-const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
+const modelTrainForm: FC<modelTrainFormProps> = (props) => {
   const {
     submitting,
     dispatch,
-    modelCreate: { classes }
+    modelTrain: { classes }
   } = props;
   const [form] = Form.useForm();
   const [showPublicUsers, setShowPublicUsers] = React.useState(false);
   
   useEffect(() => {
     dispatch({
-      type: 'modelCreate/getClasses',
+      type: 'modelTrain/getClasses',
       payload: {},
     });
   }, [1]);
@@ -56,7 +56,7 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
   const onFinish = (values: { [key: string]: any }) => {
     const { dispatch } = props;
     dispatch({
-      type: 'modelCreate/submit',
+      type: 'formAndbasicForm/submitRegularForm',
       payload: values,
     });
   };
@@ -72,8 +72,9 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
   };
   const [modelType, setModelType] = useState('imgClassification');
   const [modelBelong, setModelBelong] = useState('person');
+  console.log('classes2', classes);
   return (
-    <PageContainer content={<FormattedMessage id="formandbasic-form.create.description" />}>
+    <PageContainer content={<FormattedMessage id="formandbasic-form.train.description" />}>
       <Card bordered={false}>
         <Form
           // hideRequiredMark
@@ -144,7 +145,7 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
           </FormItem>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" loading={submitting}>
-              <FormattedMessage id="formandbasic-form.form.train" />
+              <FormattedMessage id="formandbasic-form.form.submit" />
             </Button>
           </FormItem>
         </Form>
@@ -155,13 +156,13 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
 
 export default connect(
   ({
-    modelCreate,
+    modelTrain,
     loading
   }: {
-    modelCreate: StateType,
+    modelTrain: StateType,
     loading: { effects: { [key: string]: boolean } }
   }) => ({
-    modelCreate,
+    modelTrain,
     submitting: loading.effects['formAndbasicForm/submitRegularForm'],
   })
-)(ModelCreateForm);
+)(modelTrainForm);

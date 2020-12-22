@@ -15,12 +15,5 @@ export async function addModel(params: any) {
 }
 
 export async function apiGetClasses() {
-  return request('/toyEasyDL/class/');
-}
-
-export async function apiCreateTrain({modelName, classNames}) {
-  return request(`/toyEasyDL/train/?modelName=${modelName}`, {
-    method: 'POST',
-    data: {classNames},
-  });
+  return request('/toyEasyDL/class');
 }
