@@ -101,7 +101,7 @@ export const BasicList: FC<BasicListProps> = (props) => {
   };
 
   const showModal = () => {
-    window.location.replace(`/model/create`);
+    window.location.replace(`/toy-easy-dl-fe/model/create`);
     // setVisible(true);
     // setCurrent(undefined);
   };

@@ -99,7 +99,7 @@ const OperationModal: FC<OperationModalProps> = (props) => {
           <Select placeholder="请选择">
             {
               options.map((item)=>{
-                return <Select.Option value={item}>{item}</Select.Option>;
+                return <Select.Option key={item} value={item}>{item}</Select.Option>;
               })
             }
           </Select>

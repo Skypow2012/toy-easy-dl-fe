@@ -135,7 +135,7 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
             <Checkbox.Group>
               {
                 classes.map((classItem) => {
-                  return <Checkbox value={classItem}>{classItem}</Checkbox>;
+                  return <Checkbox key={classItem} value={classItem}>{classItem}</Checkbox>;
                 })
               }
               {/* <Checkbox value="company">{formatMessage({id: 'formandbasic-form.classes.company'})}</Checkbox>

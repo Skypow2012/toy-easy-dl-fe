@@ -15,4 +15,8 @@ export default {
   'formandbasic-form.belong.person': '个人',
   'formandbasic-form.title.placeholder': '给模型起个名字',
   'formandbasic-form.classes.label': '模型分类',
+  'formandbasic-form.model-name.label': '当前模型',
+  'formandbasic-form.model-name.required': '请前往【我的模型】选择模型',
+  'formandbasic-form.model-img.label': '选择图片',
+  'formandbasic-form.model-img.required': '需要选择待验证的图片',
 };

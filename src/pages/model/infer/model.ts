@@ -1,6 +1,6 @@
 import { Effect, Reducer } from 'umi';
 import { message } from 'antd';
-import { fakeSubmitForm, apiGetClasses, apiCreateTrain } from './service';
+import { fakeSubmitForm, apiGetClasses, apiInfer } from './service';
 
 export interface ModelType {
   namespace: string;
@@ -8,20 +8,26 @@ export interface ModelType {
   effects: {
     submitRegularForm: Effect;
     getClasses: Effect;
-    submit: Effect;
+    infer: Effect;
   };
   reducers: {
     updateClasses: Reducer<StateType>;
+    updateInferResult: Reducer<StateType>;
+    updateInferLoading: Reducer<StateType>;
   }
 }
 export interface StateType {
   classes: [];
+  inferResult: any;
+  inferLoading: boolean;
 }
 const Model: ModelType = {
   namespace: 'modelInfer',
 
   state: {
     classes: [],
+    inferResult: {},
+    inferLoading: false,
   },
 
   effects: {
@@ -40,13 +46,14 @@ const Model: ModelType = {
         message.error('获取分类失败');
       }
     },
-    *submit({ payload }, { call }) {
-      console.log(payload);
-      const result = yield call(apiCreateTrain, {modelName:payload.title, classNames:payload.modelClasses});
-      console.log('result', result);
+    *infer({ payload }, { call, put }) {
+      const result = yield call(apiInfer, payload);
       if (result.errcode === 0) {
-        message.success('开始训练成功');
-        window.location.href = '/toy-easy-dl-fe/model/my/';
+        message.success('验证成功');
+        yield put({
+          type: 'updateInferResult',
+          payload: result.info,
+        });
       } else {
         message.error(result.errmsg);
       }
@@ -60,6 +67,19 @@ const Model: ModelType = {
         classes: action.payload,
       };
     },
+    updateInferResult(state, action) {
+      return {
+        ...state,
+        inferResult: action.payload,
+        inferLoading: false,
+      };
+    },
+    updateInferLoading(state, action) {
+      return {
+        ...state,
+        inferLoading: action.payload,
+      };
+    }
   }
 };
 

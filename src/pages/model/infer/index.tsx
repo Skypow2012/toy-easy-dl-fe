@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { Button, Card, DatePicker, Input, Form, Radio, Checkbox, Select, Tooltip } from 'antd';
+import { Button, Card, DatePicker, Input, Form, Radio, Checkbox, Select, Tooltip, message, Upload, Spin } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { connect, Dispatch, FormattedMessage, formatMessage } from 'umi';
 import React, { FC } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
@@ -12,7 +13,6 @@ const FormItem = Form.Item;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
-
 interface modelInferFormProps {
   submitting: boolean;
   dispatch: Dispatch<any>;
@@ -23,17 +23,11 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
   const {
     submitting,
     dispatch,
-    modelInfer: { classes }
+    modelInfer: { classes, inferResult, inferLoading}
   } = props;
   const [form] = Form.useForm();
   const [showPublicUsers, setShowPublicUsers] = React.useState(false);
   
-  useEffect(() => {
-    dispatch({
-      type: 'modelInfer/getClasses',
-      payload: {},
-    });
-  }, [1]);
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
@@ -70,84 +64,92 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
     const { publicType } = changedValues;
     if (publicType) setShowPublicUsers(publicType === '2');
   };
-  const [modelType, setModelType] = useState('imgClassification');
+  const modelNameMatch = window.location.search.match(/modelName=(.*?)$/);
+  if (!modelNameMatch) {
+    if (window.errTs && Date.now() < window.errTs + 2000) {
+      return null;
+    }
+    window.errTs = Date.now();
+
+    message.error('请先前往【我的模型】选择模型');
+    setTimeout(()=>{
+      window.location.href = '/toy-easy-dl-fe/model/my/';
+    }, 1000);
+    return null;
+  }
+  const [modelName, setModelName] = useState(modelNameMatch[1]);
   const [modelBelong, setModelBelong] = useState('person');
+  const [modelImgBase64, setModelImgBase64] = useState('');
+  const uploadButton = (
+    <div>
+      {/* {loading ? <LoadingOutlined /> : <PlusOutlined />} */}
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+  function getBase64(img: any, callback: any) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+  }
+  function handleChange(info: any) {
+    if (info.file.status === 'done') {
+      dispatch({type: "modelInfer/updateInferLoading", payload: true});
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (imageUrl: any) => {
+        // console.log(imageUrl);
+        setModelImgBase64(imageUrl);
+        dispatch({
+          type: 'modelInfer/infer',
+          payload: {
+            modelName,
+            base64: imageUrl,
+          }
+        });
+      });
+    }
+  };
+  const onPreview = async file => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow.document.write(image.outerHTML);
+  };
   return (
     <PageContainer content={<FormattedMessage id="formandbasic-form.infer.description" />}>
       <Card bordered={false}>
-        <Form
-          // hideRequiredMark
-          style={{ marginTop: 8 }}
-          form={form}
-          name="basic"
-          initialValues={{ modelType, modelBelong, public: '1' }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          onValuesChange={onValuesChange}
-        >
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.model-type.label" />}
-            name="modelType"
-            rules={[
-              {
-                message: formatMessage({ id: 'formandbasic-form.model-type.required' }),
-              },
-            ]}
+        <Spin spinning={inferLoading} delay={500}>
+          <Upload
+            listType="picture-card"
+            onChange={handleChange}
+            onPreview={onPreview}
+            onRemove={()=>{
+              setModelImgBase64('');
+              dispatch({type: 'modelInfer/updateInferResult', payload: {}});
+            }}
+            className={styles.inferImgBox}
           >
-            <Radio.Group>
-              <Radio.Button value="imgClassification">{formatMessage({id: 'formandbasic-form.model-type.img-classification'})}</Radio.Button>
-            </Radio.Group>
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.title.label" />}
-            name="title"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({ id: 'formandbasic-form.title.required' }),
-              },
-            ]}
-          >
-            <Input placeholder={formatMessage({ id: 'formandbasic-form.title.placeholder' })} />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.belong.label" />}
-            name="modelBelong"
-            rules={[]}
-          >
-            <Radio.Group>
-              <Radio.Button value="company">{formatMessage({id: 'formandbasic-form.belong.company'})}</Radio.Button>
-              <Radio.Button value="person">{formatMessage({id: 'formandbasic-form.belong.person'})}</Radio.Button>
-            </Radio.Group>
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.classes.label" />}
-            name="modelClasses"
-            rules={[{
-              required: true,
-              message: formatMessage({ id: 'formandbasic-form.classes.required' }),
-            }]}
-          >
-            <Checkbox.Group>
-              {
-                classes.map((classItem) => {
-                  return <Checkbox value={classItem}>{classItem}</Checkbox>;
-                })
-              }
-              {/* <Checkbox value="company">{formatMessage({id: 'formandbasic-form.classes.company'})}</Checkbox>
-              <Checkbox value="person">{formatMessage({id: 'formandbasic-form.classes.person'})}</Checkbox> */}
-            </Checkbox.Group>
-          </FormItem>
-          <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-            <Button type="primary" htmlType="submit" loading={submitting}>
-              <FormattedMessage id="formandbasic-form.form.infer" />
-            </Button>
-          </FormItem>
-        </Form>
+            {!modelImgBase64?uploadButton:null}
+          </Upload>
+        </Spin>
+        <div className={styles.resultBox}>
+          {!Object.keys(inferResult).length?null:Object.keys(inferResult).map((className)=>{
+            return <div>
+              <span>{className}</span>
+              <span style={{float:'right'}}>{
+                `${(inferResult[className] * 100).toFixed(2)}%`
+              }</span>
+            </div>;
+          })}
+        </div>
       </Card>
     </PageContainer>
   );
