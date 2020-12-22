@@ -153,7 +153,7 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
     const imgWindow = window.open(src);
     imgWindow.document.write(image.outerHTML);
   };
-  const result = typeof inferResult === 'string' ? inferResult : '';
+  const result = typeof inferResult === 'string' ? inferResult : undefined;
   return (
     <PageContainer content={<FormattedMessage id="formandbasic-form.infer.description" />}>
       <Card bordered={false}>

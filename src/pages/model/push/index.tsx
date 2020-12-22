@@ -123,11 +123,12 @@ class CardList extends Component<CardListProps, CardListState> {
                     >
                       <Card.Meta
                         avatar={<img alt="" className={styles.cardAvatar} src={item.avatar||modelSvg} />}
-                        title={item.modelName}
+                        title={<b>{item.modelName}</b>}
                         description={
                           <Paragraph className={styles.item} ellipsis={{ rows: 3 }}>
                             {item.description}
-                            <h5>{item.modelType === 'paramImgClassification' ? '参数图像分类' : item.modelType === 'paramImgMatching' ? '参数图像匹配' : ''}</h5>
+                            <span>{item.modelType === 'paramImgClassification' ? '参数图像分类' : item.modelType === 'paramImgMatching' ? '参数图像匹配' : ''}</span>
+                            <br/>
                             {item.isPublish?<a onClick={()=>{copy(`https://tekii.cn/toyEasyDL/paramInfer/?modelName=${item.modelName}`);message.success('复制成功');}}><CopyOutlined /><FormattedMessage id="normal.copyUrl"/></a>:null}
                             {item.isPublish?<div className={styles.republishTag}><FormattedMessage id="normal.online"/></div>:null}
                             {item.isPublish?null:<div className={styles.noRepublishTag}><FormattedMessage id="normal.offline"/></div>}
