@@ -84,7 +84,7 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
     <div>
       {/* {loading ? <LoadingOutlined /> : <PlusOutlined />} */}
       <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8 }}><FormattedMessage id="normal.uploadImage"/></div>
     </div>
   );
   function getBase64(img: any, callback: any) {
@@ -114,6 +114,7 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
     return undefined;
   }
   function handleChange(info: any) {
+    dispatch({type: 'modelInfer/updateInferResult', payload: {}});
     if (info.fileList.length) {
       info.fileList[0].status = 'done';
     } else {
@@ -152,7 +153,7 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
     const imgWindow = window.open(src);
     imgWindow.document.write(image.outerHTML);
   };
-
+  const result = typeof inferResult === 'string' ? inferResult : '';
   return (
     <PageContainer content={<FormattedMessage id="formandbasic-form.infer.description" />}>
       <Card bordered={false}>
@@ -173,7 +174,8 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
           </Upload>
         </Spin>
         <div className={styles.resultBox}>
-          {!Object.keys(inferResult).length?null:Object.keys(inferResult).map((className)=>{
+          {result !== undefined?<span>{result}</span>:null}
+          {result !== undefined||!Object.keys(inferResult).length?null:Object.keys(inferResult).map((className)=>{
             return <div key={className}>
               <span>{className}</span>
               <span style={{float:'right'}}>{

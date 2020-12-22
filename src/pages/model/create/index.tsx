@@ -80,14 +80,17 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
   };
   const [modelType, setModelType] = useState('imgClassification');
   const [modelBelong, setModelBelong] = useState('person');
+  const [requestMethod, setRequestMethod] = useState('POST');
+  const matchingDataFormat = '{\n\t"base64_1": "$text1",\n\t"base64_2": "$text2"\n}';
+  const classificationDataFormat = '{\n\t"base64": "$text"\n}';
   const initialValues = window.localStorage.editParamModel ? JSON.parse(window.localStorage.editParamModel) : {
+    modelName: Date.now(),
     modelType,
     modelBelong,
     public: '1',
-    matchingDataFormat: '{\n\t"base64_1": "$text1",\n\t"base64_2": "$text2"\n}',
-    classificationDataFormat: '{\n\t"base64": "$text"\n}',
     requestMethod: 'POST',
     dataType: 'JSON',
+    dataMap: 'result'
   };
   if (classes.length) delete window.localStorage.editParamModel;
   if (modelType !== initialValues.modelType) {
@@ -119,8 +122,8 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
           >
             <Radio.Group disabled={initialValues.isEdit}>
               <Radio.Button value="imgClassification" onClick={()=>{setModelType('imgClassification');}}>{formatMessage({id: 'formandbasic-form.model-type.img-classification'})}</Radio.Button>
-              <Radio.Button value="paramImgClassification" onClick={()=>{setModelType('paramImgClassification');}}>{formatMessage({id: 'formandbasic-form.model-type.param-img-classification'})}</Radio.Button>
-              <Radio.Button value="paramImgMatching" onClick={()=>{setModelType('paramImgMatching');}}>{formatMessage({id: 'formandbasic-form.model-type.param-img-matching'})}</Radio.Button>
+              <Radio.Button value="paramImgClassification" onClick={()=>{setModelType('paramImgClassification');form.setFieldsValue({dataFormat:classificationDataFormat});}}>{formatMessage({id: 'formandbasic-form.model-type.param-img-classification'})}</Radio.Button>
+              <Radio.Button value="paramImgMatching" onClick={()=>{setModelType('paramImgMatching');form.setFieldsValue({dataFormat:matchingDataFormat});}}>{formatMessage({id: 'formandbasic-form.model-type.param-img-matching'})}</Radio.Button>
             </Radio.Group>
           </FormItem>
           <FormItem
@@ -202,13 +205,13 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
               ]}
             >
               <Radio.Group>
-                <Radio.Button value="POST">POST</Radio.Button>
-                <Radio.Button value="GET">GET</Radio.Button>
+                <Radio.Button value="POST" onClick={()=>{setRequestMethod('POST');}}>POST</Radio.Button>
+                <Radio.Button value="GET" onClick={()=>{setRequestMethod('GET');}}>GET</Radio.Button>
               </Radio.Group>
             </FormItem> : null
           }
           {
-            modelType === 'paramImgClassification' || modelType === 'paramImgMatching' ? 
+            requestMethod === 'POST' && (modelType === 'paramImgClassification' || modelType === 'paramImgMatching') ? 
             <FormItem
               {...formItemLayout}
               label={<FormattedMessage id="formandbasic-form.data-type.label" />}
@@ -223,11 +226,12 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
               <Radio.Group>
                 <Radio.Button value="JSON">JSON</Radio.Button>
                 <Radio.Button value="FORM">FORM</Radio.Button>
+                <Radio.Button value="XML">XML</Radio.Button>
               </Radio.Group>
             </FormItem> : null
           }
           {
-            modelType === 'paramImgClassification' || modelType === 'paramImgMatching' ? 
+            requestMethod === 'POST' && (modelType === 'paramImgClassification' || modelType === 'paramImgMatching') ? 
             <FormItem
               {...formItemLayout}
               label={<FormattedMessage id="formandbasic-form.data-format.label" />}

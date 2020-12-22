@@ -1,14 +1,16 @@
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, CopyOutlined } from '@ant-design/icons';
 import { Button, Card, List, Typography, message } from 'antd';
 import React, { Component } from 'react';
 
 import { PageContainer } from '@ant-design/pro-layout';
-import { connect, Dispatch } from 'umi';
+import { connect, Dispatch, FormattedMessage } from 'umi';
 import { StateType } from './model';
 import { CardListItemDataType } from './data.d';
 import styles from './style.less';
 import modelSvg from '@/assets/model.svg';
 import { deleteModel, deleteParamModel, updateParamModel } from '../my/service';
+import copy from 'copy-to-clipboard';
+import normal from '@/locales/zh-CN/normal';
 
 const { Paragraph } = Typography;
 
@@ -112,11 +114,11 @@ class CardList extends Component<CardListProps, CardListState> {
                       className={styles.card}
                       actions={[
                         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                        <a key="option1" onClick={()=>{ item.isPublish ? null : this.editItem(item);}} style={{color: item.isPublish ? "#cccccc" : "#1890ff"}}>编辑</a>,
-                        <a key="option2">预览</a>,
-                        <a key="option3" onClick={()=>{this.updateItem(item, {isPublish: !item.isPublish});}} style={{color: "#1890ff"}}>{item.isPublish?'下线':'发布'}</a>,
+                        <a key="option1" onClick={()=>{ item.isPublish ? null : this.editItem(item);}} style={{color: item.isPublish ? "#cccccc" : "#1890ff"}}><FormattedMessage id="normal.edit"/></a>,
+                        <a key="option2" onClick={()=>{ window.location.href = `/toy-easy-dl-fe/model/infer/?type=param&modelName=${item.modelName}`; }} style={{color: "#1890ff"}}><FormattedMessage id="normal.preview"/></a>,
+                        <a key="option3" onClick={()=>{this.updateItem(item, {isPublish: !item.isPublish});}} style={{color: "#1890ff"}}>{item.isPublish?<FormattedMessage id="normal.turnOff"/>:<FormattedMessage id="normal.publish"/>}</a>,
                         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                        <a key="option4" onClick={()=>{item.isPublish ? null : this.deleteItem(item);}} style={{color: item.isPublish ? "#cccccc" : "#ff0000"}}>删除</a>
+                        <a key="option4" onClick={()=>{item.isPublish ? null : this.deleteItem(item);}} style={{color: item.isPublish ? "#cccccc" : "#ff0000"}}><FormattedMessage id="normal.delete"/></a>
                       ]}
                     >
                       <Card.Meta
@@ -125,6 +127,11 @@ class CardList extends Component<CardListProps, CardListState> {
                         description={
                           <Paragraph className={styles.item} ellipsis={{ rows: 3 }}>
                             {item.description}
+                            <h5>{item.modelType === 'paramImgClassification' ? '参数图像分类' : item.modelType === 'paramImgMatching' ? '参数图像匹配' : ''}</h5>
+                            {item.isPublish?<a onClick={()=>{copy(`https://tekii.cn/toyEasyDL/paramInfer/?modelName=${item.modelName}`);message.success('复制成功');}}><CopyOutlined /><FormattedMessage id="normal.copyUrl"/></a>:null}
+                            {item.isPublish?<div className={styles.republishTag}><FormattedMessage id="normal.online"/></div>:null}
+                            {item.isPublish?null:<div className={styles.noRepublishTag}><FormattedMessage id="normal.offline"/></div>}
+                            
                           </Paragraph>
                         }
                       />

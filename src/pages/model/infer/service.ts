@@ -19,8 +19,12 @@ export async function apiGetClasses() {
 }
 
 export async function apiInfer({modelName, base64}) {
-  return request(`/toyEasyDL/infer/?modelName=${modelName}`, {
+  const normalInferUrl = `/toyEasyDL/infer/?modelName=${modelName}`;
+  const paramInferUrl = `/toyEasyDL/paramInfer/?modelName=${modelName}`;
+  const isParam = window.location.href.indexOf('type=param') > -1;
+  const inferUrl = isParam ? paramInferUrl : normalInferUrl;
+  return request(inferUrl, {
     method: 'POST',
-    data: {base64},
+    data: isParam ? {base64s: [base64]} : {base64},
   });
 }

@@ -55,6 +55,10 @@ const Model: ModelType = {
           payload: result.info,
         });
       } else {
+        yield put({
+          type: 'updateInferLoading',
+          payload: false,
+        });
         message.error(result.errmsg);
       }
     },
