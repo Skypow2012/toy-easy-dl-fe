@@ -1,9 +1,12 @@
+import { useState, useEffect } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { Button, Card, DatePicker, Input, Form, InputNumber, Radio, Select, Tooltip } from 'antd';
+import { Button, Card, DatePicker, Input, Form, Radio, Checkbox, Select, Tooltip } from 'antd';
 import { connect, Dispatch, FormattedMessage, formatMessage } from 'umi';
 import React, { FC } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import styles from './style.less';
+import { Label } from 'bizcharts';
+import { StateType } from './model';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -13,12 +16,24 @@ const { TextArea } = Input;
 interface ModelCreateFormProps {
   submitting: boolean;
   dispatch: Dispatch<any>;
+  modelCreate: StateType;
 }
 
 const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
-  const { submitting } = props;
+  const {
+    submitting,
+    dispatch,
+    modelCreate: { classes }
+  } = props;
   const [form] = Form.useForm();
   const [showPublicUsers, setShowPublicUsers] = React.useState(false);
+  
+  useEffect(() => {
+    dispatch({
+      type: 'modelCreate/getClasses',
+      payload: {},
+    });
+  }, [1]);
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
@@ -55,20 +70,36 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
     const { publicType } = changedValues;
     if (publicType) setShowPublicUsers(publicType === '2');
   };
-
+  const [modelType, setModelType] = useState('imgClassification');
+  const [modelBelong, setModelBelong] = useState('person');
+  console.log('classes2', classes);
   return (
     <PageContainer content={<FormattedMessage id="formandbasic-form.basic.description" />}>
       <Card bordered={false}>
         <Form
-          hideRequiredMark
+          // hideRequiredMark
           style={{ marginTop: 8 }}
           form={form}
           name="basic"
-          initialValues={{ public: '1' }}
+          initialValues={{ modelType, modelBelong, public: '1' }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           onValuesChange={onValuesChange}
         >
+          <FormItem
+            {...formItemLayout}
+            label={<FormattedMessage id="formandbasic-form.model-type.label" />}
+            name="modelType"
+            rules={[
+              {
+                message: formatMessage({ id: 'formandbasic-form.model-type.required' }),
+              },
+            ]}
+          >
+            <Radio.Group>
+              <Radio.Button value="imgClassification">{formatMessage({id: 'formandbasic-form.model-type.img-classification'})}</Radio.Button>
+            </Radio.Group>
+          </FormItem>
           <FormItem
             {...formItemLayout}
             label={<FormattedMessage id="formandbasic-form.title.label" />}
@@ -84,153 +115,37 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.date.label" />}
-            name="date"
-            rules={[
+            label={<FormattedMessage id="formandbasic-form.belong.label" />}
+            name="modelBelong"
+            rules={[]}
+          >
+            <Radio.Group>
+              <Radio.Button value="company">{formatMessage({id: 'formandbasic-form.belong.company'})}</Radio.Button>
+              <Radio.Button value="person">{formatMessage({id: 'formandbasic-form.belong.person'})}</Radio.Button>
+            </Radio.Group>
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label={<FormattedMessage id="formandbasic-form.classes.label" />}
+            name="modelClasses"
+            rules={[{
+              required: true,
+              message: formatMessage({ id: 'formandbasic-form.classes.required' }),
+            }]}
+          >
+            <Checkbox.Group>
               {
-                required: true,
-                message: formatMessage({ id: 'formandbasic-form.date.required' }),
-              },
-            ]}
-          >
-            <RangePicker
-              style={{ width: '100%' }}
-              placeholder={[
-                formatMessage({ id: 'formandbasic-form.placeholder.start' }),
-                formatMessage({ id: 'formandbasic-form.placeholder.end' }),
-              ]}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.goal.label" />}
-            name="goal"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({ id: 'formandbasic-form.goal.required' }),
-              },
-            ]}
-          >
-            <TextArea
-              style={{ minHeight: 32 }}
-              placeholder={formatMessage({ id: 'formandbasic-form.goal.placeholder' })}
-              rows={4}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.standard.label" />}
-            name="standard"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({ id: 'formandbasic-form.standard.required' }),
-              },
-            ]}
-          >
-            <TextArea
-              style={{ minHeight: 32 }}
-              placeholder={formatMessage({ id: 'formandbasic-form.standard.placeholder' })}
-              rows={4}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.client.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                  <Tooltip title={<FormattedMessage id="formandbasic-form.label.tooltip" />}>
-                    <InfoCircleOutlined style={{ marginRight: 4 }} />
-                  </Tooltip>
-                </em>
-              </span>
-            }
-            name="client"
-          >
-            <Input placeholder={formatMessage({ id: 'formandbasic-form.client.placeholder' })} />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.invites.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                </em>
-              </span>
-            }
-            name="invites"
-          >
-            <Input placeholder={formatMessage({ id: 'formandbasic-form.invites.placeholder' })} />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.weight.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                </em>
-              </span>
-            }
-            name="weight"
-          >
-            <InputNumber
-              placeholder={formatMessage({ id: 'formandbasic-form.weight.placeholder' })}
-              min={0}
-              max={100}
-            />
-            <span className="ant-form-text">%</span>
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.public.label" />}
-            help={<FormattedMessage id="formandbasic-form.label.help" />}
-            name="publicType"
-          >
-            <div>
-              <Radio.Group>
-                <Radio value="1">
-                  <FormattedMessage id="formandbasic-form.radio.public" />
-                </Radio>
-                <Radio value="2">
-                  <FormattedMessage id="formandbasic-form.radio.partially-public" />
-                </Radio>
-                <Radio value="3">
-                  <FormattedMessage id="formandbasic-form.radio.private" />
-                </Radio>
-              </Radio.Group>
-              <FormItem style={{ marginBottom: 0 }} name="publicUsers">
-                <Select
-                  mode="multiple"
-                  placeholder={formatMessage({ id: 'formandbasic-form.publicUsers.placeholder' })}
-                  style={{
-                    margin: '8px 0',
-                    display: showPublicUsers ? 'block' : 'none',
-                  }}
-                >
-                  <Option value="1">
-                    <FormattedMessage id="formandbasic-form.option.A" />
-                  </Option>
-                  <Option value="2">
-                    <FormattedMessage id="formandbasic-form.option.B" />
-                  </Option>
-                  <Option value="3">
-                    <FormattedMessage id="formandbasic-form.option.C" />
-                  </Option>
-                </Select>
-              </FormItem>
-            </div>
+                classes.map((classItem) => {
+                  return <Checkbox value={classItem}>{classItem}</Checkbox>;
+                })
+              }
+              {/* <Checkbox value="company">{formatMessage({id: 'formandbasic-form.classes.company'})}</Checkbox>
+              <Checkbox value="person">{formatMessage({id: 'formandbasic-form.classes.person'})}</Checkbox> */}
+            </Checkbox.Group>
           </FormItem>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" loading={submitting}>
               <FormattedMessage id="formandbasic-form.form.submit" />
-            </Button>
-            <Button style={{ marginLeft: 8 }}>
-              <FormattedMessage id="formandbasic-form.form.save" />
             </Button>
           </FormItem>
         </Form>
@@ -239,6 +154,15 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
   );
 };
 
-export default connect(({ loading }: { loading: { effects: { [key: string]: boolean } } }) => ({
-  submitting: loading.effects['formAndbasicForm/submitRegularForm'],
-}))(ModelCreateForm);
+export default connect(
+  ({
+    modelCreate,
+    loading
+  }: {
+    modelCreate: StateType,
+    loading: { effects: { [key: string]: boolean } }
+  }) => ({
+    modelCreate,
+    submitting: loading.effects['formAndbasicForm/submitRegularForm'],
+  })
+)(ModelCreateForm);

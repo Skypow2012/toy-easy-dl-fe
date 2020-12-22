@@ -6,3 +6,14 @@ export async function fakeSubmitForm(params: any) {
     data: params,
   });
 }
+
+export async function addModel(params: any) {
+  return request('/model', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+export async function apiGetClasses() {
+  return request('/toyEasyDL/class');
+}

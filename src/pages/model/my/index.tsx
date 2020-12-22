@@ -96,8 +96,9 @@ export const BasicList: FC<BasicListProps> = (props) => {
   };
 
   const showModal = () => {
-    setVisible(true);
-    setCurrent(undefined);
+    window.location.replace(`/model/create`);
+    // setVisible(true);
+    // setCurrent(undefined);
   };
 
   const showEditModal = (item: BasicListItemDataType) => {
@@ -278,7 +279,7 @@ export const BasicList: FC<BasicListProps> = (props) => {
                 >
                   <List.Item.Meta
                     // avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                    title={<a href={`/infer?model=${item.name}`}>{item.name}</a>}
+                    title={<a href={`/toy-easy-dl-fe/model/infer?model=${item.name}`}>{item.name}</a>}
                     description={`${item.classes.join('、')}`}
                   />
                   <ListContent data={item} />
