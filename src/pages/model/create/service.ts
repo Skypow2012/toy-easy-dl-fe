@@ -24,3 +24,13 @@ export async function apiCreateTrain({modelName, classNames}) {
     data: {classNames},
   });
 }
+
+export async function apiAddParamModel({modelName, json}) {
+  const { isEdit } = json;
+  // eslint-disable-next-line no-param-reassign
+  delete json.isEdit;
+  return request(`/toyEasyDL/paramModel/?modelName=${modelName}`, {
+    method: isEdit ? 'PUT' : 'POST',
+    data: json,
+  });
+}

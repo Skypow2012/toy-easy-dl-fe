@@ -1,22 +1,23 @@
-import { Effect, Reducer } from 'umi';
+import type { Effect, Reducer } from 'umi';
 import { message } from 'antd';
-import { fakeSubmitForm, apiGetClasses, apiCreateTrain } from './service';
+import { fakeSubmitForm, apiGetClasses, apiCreateTrain, apiAddParamModel } from './service';
 
-export interface ModelType {
+export type ModelType = {
   namespace: string;
   state: StateType;
   effects: {
     submitRegularForm: Effect;
     getClasses: Effect;
     submit: Effect;
+    addParamModel: Effect;
   };
   reducers: {
     updateClasses: Reducer<StateType>;
   }
-}
-export interface StateType {
+};
+export type StateType = {
   classes: [];
-}
+};
 const Model: ModelType = {
   namespace: 'modelCreate',
 
@@ -29,7 +30,7 @@ const Model: ModelType = {
       yield call(fakeSubmitForm, payload);
       message.success('提交成功');
     },
-    *getClasses({ payload }, { call, put }) {
+    *getClasses(_nothing, { call, put }) {
       const result = yield call(apiGetClasses);
       if (result.errcode === 0) {
         yield put({
@@ -41,12 +42,20 @@ const Model: ModelType = {
       }
     },
     *submit({ payload }, { call }) {
-      console.log(payload);
-      const result = yield call(apiCreateTrain, {modelName:payload.title, classNames:payload.modelClasses});
-      console.log('result', result);
+      const result = yield call(apiCreateTrain, {modelName:payload.modelName, classNames:payload.modelClasses});
       if (result.errcode === 0) {
         message.success('开始训练成功');
         window.location.href = '/toy-easy-dl-fe/model/my/';
+      } else {
+        message.error(result.errmsg);
+      }
+    },
+    *addParamModel({ payload }, { call }) {
+      const {modelName} = payload;
+      // eslint-disable-next-line no-param-reassign
+      const result = yield call(apiAddParamModel, {modelName, json: payload});
+      if (result.errcode === 0) {
+        window.location.href = '/toy-easy-dl-fe/model/push/';
       } else {
         message.error(result.errmsg);
       }

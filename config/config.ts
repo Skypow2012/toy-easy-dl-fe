@@ -99,7 +99,7 @@ export default defineConfig({
               }, {
                 name: 'push',
                 path: '/model/push',
-                // component: './model/push',
+                component: './model/push',
               },]
             },
             {

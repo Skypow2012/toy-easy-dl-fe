@@ -32,7 +32,6 @@ export default {
   'formandbasic-form.phone-number.placeholder': '手机号',
   'formandbasic-form.verification-code.placeholder': '验证码',
   'formandbasic-form.title.label': '标题',
-  'formandbasic-form.title.placeholder': '给目标起个名字',
   'formandbasic-form.date.label': '起止日期',
   'formandbasic-form.placeholder.start': '开始日期',
   'formandbasic-form.placeholder.end': '结束日期',

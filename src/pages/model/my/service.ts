@@ -21,6 +21,18 @@ export async function deleteModel(modelName: string) {
   });
 }
 
+export async function deleteParamModel(modelName: string) {
+  return request(`/toyEasyDL/paramModel?modelName=${modelName}`, {
+    method: 'DELETE',
+  });
+}
+
+export async function updateParamModel(modelName: string, data: any) {
+  return request(`/toyEasyDL/paramModel?modelName=${modelName}`, {
+    method: 'PUT',
+    data
+  });
+}
 
 export async function removeFakeList(params: ParamsType) {
   const { count = 5, ...restParams } = params;
