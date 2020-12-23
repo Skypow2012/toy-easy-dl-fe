@@ -268,7 +268,7 @@ export const BasicList: FC<BasicListProps> = (props) => {
                       key="edit"
                       style={{color:item.percent === undefined?undefined:'#ccc'}}
                       onClick={() => {
-                        copy(`${window.location.host}/toyInfer/model/infer/?modelName=${item.name}`);
+                        copy(`${window.location.protocol}//${window.location.host}/toyEasyDL/infer/?modelName=${item.name}`);
                         message.success(formatMessage({id: "msg.copySuccess"}));
                       }}
                     >
