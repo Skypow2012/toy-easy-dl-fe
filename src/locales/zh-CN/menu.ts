@@ -4,6 +4,7 @@ export default {
   'menu.model.create': '创建模型',
   'menu.model.train': '训练模型',
   'menu.model.infer': '验证模型',
+  'menu.model.paramInfer': '验证参数模型',
   'menu.model.push': '发布模型',
   'menu.data': 'EasyData数据服务',
   'menu.data.show': '数据总览',

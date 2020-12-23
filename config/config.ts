@@ -98,6 +98,11 @@ export default defineConfig({
                 component: './model/infer',
               },
               {
+                name: 'paramInfer',
+                path: '/model/paramInfer',
+                component: './model/paramInfer',
+              },
+              {
                 name: 'push',
                 path: '/model/push',
                 component: './model/push',
