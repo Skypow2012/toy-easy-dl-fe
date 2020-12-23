@@ -4,4 +4,5 @@ export default {
   'msg.needInputNewClassName': '请先输入新类名',
   'msg.deleteSuccess': '删除成功',
   'msg.addSuccess': '添加成功',
+  'msg.copySuccess': '复制成功',
 };

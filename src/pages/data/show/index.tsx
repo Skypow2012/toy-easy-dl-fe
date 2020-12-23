@@ -114,7 +114,7 @@ function CardList(localState: any) {
       return <Image.PreviewGroup
         key={item.className}
       >
-        {nowClass === '全部' ? <p>{item.className}</p> : null}
+        <p>{item.className}</p>
         {
           item.images.map((imgFileName: string) => {
             return <Image
@@ -175,12 +175,12 @@ function CardList(localState: any) {
         }
       </Select>
       <input style={{display:'none'}} id="img-input" type="file" multiple onChange={()=>{imgChangeHandle(nowClass);}}></input>
-      <Button onClick={selectImgInput} disabled={!!(!nowClass || nowClass === '全部')} style={{ marginLeft: '10px' }}><FormattedMessage id="normal.uploadImage"/></Button>
-      <Button onClick={delClassInput} disabled={!!(!nowClass || nowClass === '全部')} danger style={{ marginLeft: '10px' }}><FormattedMessage id="normal.delClass"/></Button>
+      <Button onClick={selectImgInput} disabled={!!(!nowClass || nowClass === '全部')} style={{ marginTop: '10px', marginRight: '10px' }}><FormattedMessage id="normal.uploadImage"/></Button>
+      <Button onClick={delClassInput} disabled={!!(!nowClass || nowClass === '全部')} danger style={{ marginTop: '10px', marginRight: '10px' }}><FormattedMessage id="normal.delClass"/></Button>
       <br/>
       <br/>
-      <Input value={newClassName} placeholder="输入新类别名称" style={{ width: '10rem'}} onChange={(event)=>{setNewClassName(event.target.value);}}></Input>
-      <Button onClick={addClassInput} disabled={!newClassName} style={{ marginLeft: '25px' }}><FormattedMessage id="normal.addClass"/></Button>
+      <Input value={newClassName} placeholder="输入新类别名称" style={{ width: '10rem', marginRight: '15px'}} onChange={(event)=>{setNewClassName(event.target.value);}}></Input>
+      <Button onClick={addClassInput} disabled={!newClassName} style={{ marginTop: '10px' }}><FormattedMessage id="normal.addClass"/></Button>
       <div className={styles.imgList}>
         <p style={{color:'#cccccc', fontSize: '0.8rem'}}>鼠标中键点击小图，可以删除图片</p>
         {renderImgs(images)}

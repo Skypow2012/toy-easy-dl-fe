@@ -14,16 +14,18 @@ import {
   Progress,
   Radio,
   Row,
+  message,
 } from 'antd';
 
 import { findDOMNode } from 'react-dom';
 import { PageContainer } from '@ant-design/pro-layout';
-import { connect, Dispatch } from 'umi';
+import { connect, Dispatch, formatMessage } from 'umi';
 import moment from 'moment';
 import OperationModal from './components/OperationModal';
 import { StateType } from './model';
 import { BasicListItemDataType } from './data.d';
 import styles from './style.less';
+import copy from 'copy-to-clipboard';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -262,6 +264,16 @@ export const BasicList: FC<BasicListProps> = (props) => {
                 return <List.Item
                   key={item.name}
                   actions={[
+                    <a
+                      key="edit"
+                      style={{color:item.percent === undefined?undefined:'#ccc'}}
+                      onClick={() => {
+                        copy(`${window.location.host}/toyInfer/model/infer/?modelName=${item.name}`);
+                        message.success(formatMessage({id: "msg.copySuccess"}));
+                      }}
+                    >
+                      复制
+                    </a>,
                     <a
                       key="edit"
                       style={{color:item.percent === undefined?undefined:'#ccc'}}
