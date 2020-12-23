@@ -96,7 +96,8 @@ export default defineConfig({
                 name: 'infer',
                 path: '/model/infer',
                 component: './model/infer',
-              }, {
+              },
+              {
                 name: 'push',
                 path: '/model/push',
                 component: './model/push',
@@ -109,12 +110,12 @@ export default defineConfig({
               routes: [{
                 name: 'show',
                 path: '/data/show',
-                // component: './data/show',
+                component: './data/show',
               }, {
-                name: 'tag-manage',
-                path: '/data/tag/manage',
-                // component: './data/tag/manage',
-              }, {
+              //   name: 'tag-manage',
+              //   path: '/data/tag/manage',
+              //   // component: './data/tag/manage',
+              // }, {
                 name: 'tag-online',
                 path: '/data/tag/online',
                 // component: './data/tag/online',
@@ -179,6 +180,12 @@ export default defineConfig({
                   icon: 'smile',
                   path: '/editor/mind',
                   component: './editor/mind',
+                },
+                {
+                  name: 'structure',
+                  icon: 'smile',
+                  path: '/editor/structure',
+                  component: './editor/structure',
                 },
               ],
             },

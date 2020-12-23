@@ -13,6 +13,8 @@ export default {
   'formandbasic-form.model-type.img-classification': '图像分类',
   'formandbasic-form.model-type.param-img-classification': '参数图像分类',
   'formandbasic-form.model-type.param-img-matching': '参数图像匹配',
+  'formandbasic-form.demo-images.label': '示例图片地址',
+  'formandbasic-form.demo-images.placeholder': '请填写示例图片地址，多张图片用;分隔',
   'formandbasic-form.model-input-name.label': '模型名称',
   'formandbasic-form.belong.label': '模型归属',
   'formandbasic-form.belong.company': '公司',

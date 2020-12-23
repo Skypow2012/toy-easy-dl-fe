@@ -7,6 +7,7 @@ import settings from './zh-CN/settings';
 import pages from './zh-CN/pages';
 import form from './zh-CN/form';
 import normal from './zh-CN/normal';
+import msg from './zh-CN/msg';
 
 export default {
   'navBar.lang': '语言',
@@ -25,4 +26,5 @@ export default {
   ...component,
   ...form,
   ...normal,
+  ...msg,
 };

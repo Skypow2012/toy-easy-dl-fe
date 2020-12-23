@@ -8,4 +8,6 @@ export default {
   'normal.online': '已上线',
   'normal.offline': '待上线',
   'normal.uploadImage': '上传图片',
+  'normal.addClass': '新增分类',
+  'normal.delClass': '删除分类',
 };

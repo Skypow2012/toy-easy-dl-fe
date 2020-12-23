@@ -97,19 +97,22 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
     let cnt = 0;
     for (let i = 0; i < base64Urls.length; i++) {
       const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      const ctx: any = canvas.getContext('2d');
       const img = document.createElement('img');
       img.src = base64Urls[i];
+      // eslint-disable-next-line @typescript-eslint/no-loop-func
       img.onload = () => {
         canvas.width = 32;
         canvas.height = 32;
         ctx.drawImage(img, 0, 0, 32, 32);
         // document.body.appendChild(canvas);
+        // eslint-disable-next-line no-param-reassign
         base64Urls[i] = canvas.toDataURL();
-        if (++cnt === base64Urls.length) {
+        cnt += 1;
+        if (cnt === base64Urls.length) {
           cb(base64Urls);
         }
-      }
+      };
     }
     return undefined;
   }

@@ -121,9 +121,9 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
             ]}
           >
             <Radio.Group disabled={initialValues.isEdit}>
-              <Radio.Button value="imgClassification" onClick={()=>{setModelType('imgClassification');}}>{formatMessage({id: 'formandbasic-form.model-type.img-classification'})}</Radio.Button>
-              <Radio.Button value="paramImgClassification" onClick={()=>{setModelType('paramImgClassification');form.setFieldsValue({dataFormat:classificationDataFormat});}}>{formatMessage({id: 'formandbasic-form.model-type.param-img-classification'})}</Radio.Button>
-              <Radio.Button value="paramImgMatching" onClick={()=>{setModelType('paramImgMatching');form.setFieldsValue({dataFormat:matchingDataFormat});}}>{formatMessage({id: 'formandbasic-form.model-type.param-img-matching'})}</Radio.Button>
+              <Radio.Button value="imgClassification" onClick={()=>{setModelType('imgClassification');}}><FormattedMessage id='formandbasic-form.model-type.img-classification'/></Radio.Button>
+              <Radio.Button value="paramImgClassification" onClick={()=>{setModelType('paramImgClassification');form.setFieldsValue({dataFormat:classificationDataFormat});}}><FormattedMessage id='formandbasic-form.model-type.param-img-classification'/></Radio.Button>
+              <Radio.Button value="paramImgMatching" onClick={()=>{setModelType('paramImgMatching');form.setFieldsValue({dataFormat:matchingDataFormat});}}><FormattedMessage id='formandbasic-form.model-type.param-img-matching'/></Radio.Button>
             </Radio.Group>
           </FormItem>
           <FormItem
@@ -264,8 +264,18 @@ const ModelCreateForm: FC<ModelCreateFormProps> = (props) => {
               <Input placeholder={formatMessage({ id: 'formandbasic-form.data-map.placeholder' })} />
             </FormItem> : null
           }
+          {
+            modelType === 'paramImgClassification' || modelType === 'paramImgMatching' ? 
+            <FormItem
+              {...formItemLayout}
+              label={formatMessage({ id:'formandbasic-form.demo-images.label'})}
+              name="demoImages"
+            >
+              <Input placeholder={formatMessage({ id: 'formandbasic-form.demo-images.placeholder' })}/>
+            </FormItem> : null
+          }
           <FormItem {...submitFormLayout} name="isEdit" style={{display: 'none'}}>
-              <Input />
+            <Input />
           </FormItem>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" loading={submitting}>
