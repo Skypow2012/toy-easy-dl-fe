@@ -1,10 +1,11 @@
-import { Button, Card, message, Image, Select, InputNumber, Spin, Space } from 'antd';
+import { Button, Card, message, Image, Select, Input, InputNumber, tex, Spin, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { connect, FormattedMessage, formatMessage } from 'umi';
 import styles from './style.less';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 function TagOnline(localState: any) {
   const {
@@ -24,6 +25,7 @@ function TagOnline(localState: any) {
   useEffect(() => {
     setAnchor(imgInfo);
   }, [imgInfo]);
+  const [anchorMode, setAnchorMode] = useState('polygon');
   function selectClass(val: string) {
     dispatch({
       type: 'dataTagOnline/setNowClass',
@@ -68,16 +70,81 @@ function TagOnline(localState: any) {
   const [isDown, setIsDown] = useState(false);
   const [xLoc, setXLoc] = useState(0);
   const [yLoc, setYLoc] = useState(0);
-  const [x2Loc, setX2Loc] = useState(0);
-  const [y2Loc, setY2Loc] = useState(0);
-  // let xLoc, yLoc, x2Loc, y2Loc;
-  function mDown(ev) {
-    setIsDown(true);
-    // console.log(ev.clientX, getOffsetX(ev.target));
-    setXLoc(ev.clientX - getOffsetX(ev.target, 1));
-    setYLoc(ev.clientY - getOffsetY(ev.target, 1));
-    console.log(xLoc, yLoc);
+  const [points, setPoints] = useState([]);
+  if (imgInfo.points) {
+    imgPoints2Points(imgInfo.points);
+  } else {
+    imgPoints2Points('');
   }
+  function imgPoints2Points(imgPoints: string) {
+    const ps = imgPoints ? imgPoints.split(' ') : [];
+    const newPoints = [];
+    for (let i = 0; i < ps.length; i += 1) {
+      const p = ps[i].split(',');
+      const x = Number(p[0])*300|0;
+      const y = Number(p[1])*300|0;
+      newPoints.push(`${x},${y}`);
+    }
+    console.log('newPoints', newPoints);
+    if (points.join(' ') !== newPoints.join(' ')) setPoints(newPoints);
+  }
+  function points2ImgPoints(points) {
+    const ps = [];
+    for (let i = 0; i < points.length; i += 1) {
+      const point = points[i];
+      const p = point.split(',');
+      const x = toFix(Number(p[0]), 300, 5);
+      const y = toFix(Number(p[1]), 300, 5);
+      console.log('points2ImgPoints', Number(p[0]), x)
+      ps.push(`${x},${y}`);
+    }
+    return ps.join(' ');
+  }
+  // let xLoc, yLoc, x2Loc, y2Loc;
+  function mDown(ev: any) {
+    const x = ev.clientX - getOffsetX(ev.target, 1);
+    const y = ev.clientY - getOffsetY(ev.target, 1);
+    console.log('mDown', anchorMode);
+    switch (anchorMode) {
+      case 'area':
+        setIsDown(true);
+        setXLoc(x);
+        setYLoc(y);
+        console.log('area', xLoc, yLoc);
+        break;
+      case 'polygon':
+        if (ev.button === 1) {
+          delPoints(points, x, y);
+        } else if (ev.button === 0) {
+          points.push(`${x},${y}`);
+        }
+        setPoints([...points]);
+        setImgInfo('points', points2ImgPoints(points));
+        console.log('polygon', points);
+        break;
+      default:
+    }
+  }
+
+  function delPoints(points, x, y) {
+    let minD = Infinity;
+    let minIdx;
+    for (let i = 0; i < points.length; i++) {
+      const p = points[i].split(',');
+      const pX = Number(p[0]);
+      const pY = Number(p[1]);
+      const d = (pX - x)** 2 + (pY - y) ** 2;
+      if (d < minD) {
+        minD = d;
+        minIdx = i;
+      }
+    }
+    if (minIdx !== undefined) {
+      points.splice(minIdx, 1);
+    }
+    return points;
+  }
+
   function toFix(num, smallRate, fixRate) {
     return Number((num/smallRate).toFixed(fixRate));
   }
@@ -160,10 +227,11 @@ function TagOnline(localState: any) {
     document.getElementById('anchor').style.width = 0 + 'px';
     document.getElementById('anchor').style.height = 0 + 'px';
   }
+  console.log('xxx points', points)
   return <PageContainer>
     <Card>
       <div>
-        <Select onChange={(val: string)=>{selectClass(val);}} placeholder={"请选择分类"}>
+        <Select style={{minWidth: '5rem'}} onChange={(val: string)=>{selectClass(val);}} placeholder={"请选择分类"}>
           {classes.map((className: string)=>{
             return <Option key={className} value={className}>{className}</Option>;
           })}
@@ -172,7 +240,24 @@ function TagOnline(localState: any) {
       <div className={styles.inferBox} draggable="false">
         <h2>待标注图片</h2>
         <div className={styles.imgBox} draggable="false">
-          <div className={styles.anchor} id="anchor"></div>
+          {
+            anchorMode === 'polygon' ? <svg className={styles.polygonAnchor} height="300" width="300">
+              <polygon points={`${points.join(' ')}`}/>
+            </svg> : null
+          }
+          {
+            anchorMode === 'polygon' ? <div className={styles.polygonAnchorPointArea} draggable="false">
+              {
+                points.map((point)=>{
+                  const p = point.split(',');
+                  const x = Number(p[0]);
+                  const y = Number(p[1]);
+                  return <div className={styles.polygonAnchorPoint} style={{left:x, top:y}} draggable="false"></div>;
+                })
+              }
+            </div> : null
+          }
+          <div className={styles.anchor} id="anchor" style={{display: anchorMode === 'area' ? 'block' : 'none'}}></div>
           {
             images[imgIdx]?<img
             draggable={false}
@@ -186,6 +271,7 @@ function TagOnline(localState: any) {
             style={{userSelect:'none'}}
             ></img>:<div className={styles.defaultImg}>没有图片</div>}
         </div>
+        <Button className={styles.lastNextBtn} disabled={!images[imgIdx]} onClick={()=>{setAnchorMode(anchorMode==='area'?'polygon':'area');}}>{anchorMode==='area'?'矩形模型':'多边形模式'}</Button>
         <Button className={styles.lastNextBtn} disabled={imgIdx <= 0} onClick={()=>{setImgIdx(imgIdx-1);}}>上一张</Button>
         <Button className={styles.lastNextBtn} disabled={imgIdx >= (images.length - 1)} onClick={()=>{setImgIdx(imgIdx+1);}}>下一张</Button>
       </div>
@@ -198,6 +284,7 @@ function TagOnline(localState: any) {
             <div className={styles.resultLine} ><span className={styles.resultLabel}>y:</span><InputNumber className={styles.resultInfo} value={imgInfo.y} onChange={(val)=>{setImgInfo('y', val);}}/></div>
             <div className={styles.resultLine} ><span className={styles.resultLabel}>w:</span><InputNumber className={styles.resultInfo} value={imgInfo.w} onChange={(val)=>{setImgInfo('w', val);}}/></div>
             <div className={styles.resultLine} ><span className={styles.resultLabel}>h:</span><InputNumber className={styles.resultInfo} value={imgInfo.h} onChange={(val)=>{setImgInfo('h', val);}}/></div>
+            <div className={styles.resultLine} ><span className={styles.resultLabel}>points:</span><TextArea rows={3} className={styles.resultInfo} value={imgInfo.points} disabled/></div>
             <div className={styles.resultLine} ><span className={styles.resultLabel}>class:</span>
               <Select className={styles.resultInfo} value={imgInfo.className} onChange={(val: string)=>{console.log(val);setImgInfo('className', val);}} placeholder={"请选择目标分类"}>
                 {classes.map((className: string)=>{

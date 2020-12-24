@@ -24,6 +24,28 @@
   margin: auto;
   margin-bottom: 10px;
 }
+.polygonAnchorPointArea,
+.polygonAnchorPoint,
+.polygonAnchor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+.polygonAnchor {
+  fill:rgba(0, 255, 0, 0.3);
+  // stroke:#cccccc;
+  // stroke-width:1;
+  // fill-rule:evenodd;
+  fill-rule:nonzero;
+}
+.polygonAnchorPoint {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  transform: translate(-2px, -2px);
+  background-color: #1890ff;
+}
 .anchor {
   position: absolute;
   background: rgba(0, 255, 0, 0.3);

@@ -45,10 +45,6 @@ const Model: ModelType = {
     nowClass: '',
     imgInfo: {},
     
-    x: undefined,
-    y: undefined,
-    w: undefined,
-    h: undefined,
     tarClassName: undefined,
   },
 
