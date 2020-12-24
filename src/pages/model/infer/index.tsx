@@ -158,7 +158,7 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
   };
   const result = typeof inferResult === 'string' ? inferResult : undefined;
   return (
-    <PageContainer content={<FormattedMessage id="formandbasic-form.infer.description" />}>
+    <PageContainer content={`当前模型为【${decodeURIComponent(modelName)}】 ${formatMessage({id:"formandbasic-form.infer.description"})}`}>
       <Card bordered={false}>
         <Spin spinning={inferLoading} delay={500}>
           <Upload
@@ -177,15 +177,18 @@ const modelInferForm: FC<modelInferFormProps> = (props) => {
           </Upload>
         </Spin>
         <div className={styles.resultBox}>
+          {/* {result !== undefined||!Object.keys(inferResult).length?null:<img src={window.images[0]}></img>} */}
           {result !== undefined?<span>{result}</span>:null}
-          {result !== undefined||!Object.keys(inferResult).length?null:Object.keys(inferResult).map((className)=>{
-            return <div key={className}>
-              <span>{className}</span>
-              <span style={{float:'right'}}>{
-                `${(inferResult[className] * 100).toFixed(2)}%`
-              }</span>
-            </div>;
-          })}
+          {result !== undefined||!Object.keys(inferResult).length?null:<div style={{display:'inline-block',width: '100%'}}>{
+            Object.keys(inferResult).map((className)=>{
+              return <div key={className}>
+                <span>{className}</span>
+                <span style={{float:'right'}}>{
+                  `${(inferResult[className] * 100).toFixed(2)}%`
+                }</span>
+              </div>;
+            })}
+          </div>}
         </div>
       </Card>
     </PageContainer>
