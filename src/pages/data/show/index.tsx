@@ -1,4 +1,5 @@
 import { Button, Card, message, Image, Select, Input } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { connect, FormattedMessage, formatMessage } from 'umi';
@@ -131,7 +132,7 @@ function CardList(localState: any) {
             />;
           })
         }
-        <span className={styles.addBtn} onClick={()=>{nowClass=item.className;selectImgInput();}}>＋</span>
+        <span className={styles.addBtn} onClick={()=>{nowClass=item.className;selectImgInput();}}><PlusCircleOutlined /></span>
         {nowClass === '全部' ? <br></br> : null}
       </Image.PreviewGroup>;
     });

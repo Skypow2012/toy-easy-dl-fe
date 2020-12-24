@@ -70,7 +70,7 @@ function TagOnline(localState: any) {
   function setImgInfo(key: string, val: any) {
     imgInfo[key] = val;
     console.log(imgInfo);
-    dispatch({type: "dataTagOnline/setImageInfo", payload: {}});
+    dispatch({type: "dataTagOnline/setImageInfo", payload: imgInfo});
   }
   const [isDown, setIsDown] = useState(false);
   const [xLoc, setXLoc] = useState(0);
@@ -275,9 +275,11 @@ function TagOnline(localState: any) {
             style={{userSelect:'none'}}
             ></img>:<div className={styles.defaultImg}>没有图片</div>}
         </div>
-        <Button className={styles.lastNextBtn} disabled={!images[imgIdx]} onClick={()=>{setAnchorMode(anchorMode==='area'?'polygon':'area');}}>{anchorMode==='area'?'矩形':'多边形'}</Button>
-        <Button className={styles.lastNextBtn} disabled={imgIdx <= 0} onClick={()=>{setImgIdx(imgIdx-1);}}>上张</Button>
-        <Button className={styles.lastNextBtn} disabled={imgIdx >= (images.length - 1)} onClick={()=>{setImgIdx(imgIdx+1);}}>下张</Button>
+        <div className={styles.lastNextBtnArea}>
+          <Button className={styles.lastNextBtn} disabled={!images[imgIdx]} onClick={()=>{setAnchorMode(anchorMode==='area'?'polygon':'area');}}>{anchorMode==='area'?'矩形':'多边形'}</Button>
+          <Button className={styles.lastNextBtn} disabled={imgIdx <= 0} onClick={()=>{setImgIdx(imgIdx-1);}}>上张</Button>
+          <Button className={styles.lastNextBtn} disabled={imgIdx >= (images.length - 1)} onClick={()=>{setImgIdx(imgIdx+1);}}>下张</Button>
+        </div>
       </div>
       <div className={styles.classResultBox}>
         <h2>标注结果</h2>
