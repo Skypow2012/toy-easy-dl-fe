@@ -62,7 +62,8 @@ function smaller(base64Urls: any[], cb: any) {
 
 
 function CardList(localState: any) {
-  const { dispatch, classes, nowClass, images } = localState;
+  const { dispatch, classes, images } = localState;
+  let { nowClass } = localState; 
   useEffect(() => {
     dispatch({
       type: 'dataShow/fetch'
@@ -130,6 +131,7 @@ function CardList(localState: any) {
             />;
           })
         }
+        <span className={styles.addBtn} onClick={()=>{nowClass=item.className;selectImgInput();}}>＋</span>
         {nowClass === '全部' ? <br></br> : null}
       </Image.PreviewGroup>;
     });
