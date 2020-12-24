@@ -85,11 +85,25 @@ function TagOnline(localState: any) {
     if (isDown) {
       let x2Loc = ev.clientX - getOffsetX(ev.target)
       let y2Loc = ev.clientY - getOffsetY(ev.target)
-      imgInfo.x = toFix(Math.min(xLoc, x2Loc), 300, 5);
-      imgInfo.y = toFix(Math.min(yLoc, y2Loc), 300, 5);
-      imgInfo.w = toFix(Math.abs(xLoc - x2Loc), 300, 5);
-      imgInfo.h = toFix(Math.abs(yLoc - y2Loc), 300, 5);
-      console.log(imgInfo);
+      imgInfo.x = (Math.min(xLoc, x2Loc)/ 300);
+      imgInfo.y = (Math.min(yLoc, y2Loc)/ 300);
+      imgInfo.w = (Math.abs(xLoc - x2Loc)/ 300);
+      imgInfo.h = (Math.abs(yLoc - y2Loc)/ 300);
+      if (imgInfo.x < 0) {
+        imgInfo.w += imgInfo.x;
+        imgInfo.x = 0;
+      }
+      if (imgInfo.y < 0) {
+        imgInfo.h += imgInfo.y;
+        imgInfo.y = 0;
+      }
+      if (imgInfo.w+imgInfo.x > 1) imgInfo.w = 1 - imgInfo.x;
+      if (imgInfo.h+imgInfo.y > 1) imgInfo.h = 1 - imgInfo.y;
+      imgInfo.x = toFix(imgInfo.x, 1, 5);
+      imgInfo.y = toFix(imgInfo.y, 1, 5);
+      imgInfo.w = toFix(imgInfo.w, 1, 5);
+      imgInfo.h = toFix(imgInfo.h, 1, 5);
+      
       dispatch({type: "dataTagOnline/setImageInfo", payload: imgInfo});
       setIsDown(false);
     }
@@ -155,9 +169,9 @@ function TagOnline(localState: any) {
           })}
         </Select>
       </div>
-      <div className={styles.inferBox}>
+      <div className={styles.inferBox} draggable="false">
         <h2>待标注图片</h2>
-        <div className={styles.imgBox}>
+        <div className={styles.imgBox} draggable="false">
           <div className={styles.anchor} id="anchor"></div>
           {
             images[imgIdx]?<img
