@@ -149,7 +149,7 @@ function CardList(localState: any) {
     });
   }
 
-  return <PageContainer>
+  return <PageContainer content={modelInfo.modelName}>
     <Card>
       <div className={styles.inferBox}>
         <h2>待识别图片</h2>
