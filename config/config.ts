@@ -123,7 +123,7 @@ export default defineConfig({
               // }, {
                 name: 'tag-online',
                 path: '/data/tag/online',
-                // component: './data/tag/online',
+                component: './data/tag/online',
               }, {
                 name: 'cloud',
                 path: '/data/cloud',

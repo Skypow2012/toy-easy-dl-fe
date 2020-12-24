@@ -1,0 +1,77 @@
+.inferBox,
+.classResultBox,
+.matchResultBox {
+  position: relative;
+  display: inline-block;
+  width: 48%;
+  height: 400px;
+  max-height: calc(100vw - 20px);
+  margin: 0 1%;
+  margin-top: 10px;
+  text-align: center;
+  box-shadow: 0px 0px 5px #cccccc;
+  vertical-align: top;
+}
+.matchResultBox {
+  width: 98%;
+}
+.imgBox {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  max-width: calc(100vw - 120px);
+  max-height: calc(100vw - 120px);
+  margin: auto;
+  margin-bottom: 10px;
+}
+.anchor {
+  position: absolute;
+  background: rgba(0, 255, 0, 0.3);
+  pointer-events: none;
+}
+.btn {
+  margin-top: 10px;
+}
+.inferCtrl {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  margin: auto;
+  text-align: center;
+}
+.lastNextBtn {
+  margin: 0 10px;
+}
+.resultLine {
+  display: inline-block;
+  margin: 0;
+  width: 80%;
+}
+.resultLabel {
+  float: left;
+}
+.resultInfo {
+  float: right;
+  display: inline-block;
+  color: #1890ff;
+  width: 10rem;
+}
+.defaultImg {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #cccccc;
+  font-size: 1.5rem;
+}
+
+@media screen and (max-width: 812px) {
+  .inferBox,
+  .classResultBox {
+    width: 98%;
+  }
+}
