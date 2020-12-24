@@ -135,8 +135,8 @@ const Model: ModelType = {
       };
     },
     setImageInfo(state, action) {
-      const tarImgInfo = action.payload;
-      if (!tarImgInfo.className) tarImgInfo.className = state.nowClass;
+      const tarImgInfo = action.payload || {};
+      if (action.payload && !tarImgInfo.className) tarImgInfo.className = state.nowClass;
       console.log('tarImgInfo', tarImgInfo)
       return {
         ...state,

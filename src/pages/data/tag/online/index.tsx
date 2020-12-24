@@ -26,7 +26,9 @@ function TagOnline(localState: any) {
     setAnchor(imgInfo);
   }, [imgInfo]);
   const [anchorMode, setAnchorMode] = useState('polygon');
+  const [points, setPoints] = useState([]);
   function selectClass(val: string) {
+    dispatch({type: "dataTagOnline/setImageInfo", payload: undefined});
     dispatch({
       type: 'dataTagOnline/setNowClass',
       payload: val
@@ -35,8 +37,17 @@ function TagOnline(localState: any) {
       type: 'dataTagOnline/getImages',
       payload: val
     });
+    dispatch({
+      type: 'dataTagOnline/setImgIdx',
+      payload: 0
+    });
   }
   function setImgIdx(idx: number) {
+    dispatch({type: "dataTagOnline/setImageInfo", payload: undefined});
+    dispatch({
+      type: 'dataTagOnline/setImgIdx',
+      payload: idx
+    });
     dispatch({
       type: 'dataTagOnline/getImageInfo',
       payload: {
@@ -44,12 +55,6 @@ function TagOnline(localState: any) {
         imgName: images[idx]
       }
     });
-    dispatch({
-      type: 'dataTagOnline/setImgIdx',
-      payload: idx
-    });
-    dispatch({type: "setImageInfo", payload: {}});
-    setImgInfo('className', nowClass);
   }
   function updateModelInfo() {
     console.log(imgInfo);
@@ -65,12 +70,11 @@ function TagOnline(localState: any) {
   function setImgInfo(key: string, val: any) {
     imgInfo[key] = val;
     console.log(imgInfo);
-    dispatch({type: "dataTagOnline/setImageInfo", payload: imgInfo});
+    dispatch({type: "dataTagOnline/setImageInfo", payload: {}});
   }
   const [isDown, setIsDown] = useState(false);
   const [xLoc, setXLoc] = useState(0);
   const [yLoc, setYLoc] = useState(0);
-  const [points, setPoints] = useState([]);
   if (imgInfo.points) {
     imgPoints2Points(imgInfo.points);
   } else {
@@ -252,7 +256,7 @@ function TagOnline(localState: any) {
                   const p = point.split(',');
                   const x = Number(p[0]);
                   const y = Number(p[1]);
-                  return <div className={styles.polygonAnchorPoint} style={{left:x, top:y}} draggable="false"></div>;
+                  return <div key={`${x},${y}`} className={styles.polygonAnchorPoint} style={{left:x, top:y}} draggable="false"></div>;
                 })
               }
             </div> : null
@@ -271,9 +275,9 @@ function TagOnline(localState: any) {
             style={{userSelect:'none'}}
             ></img>:<div className={styles.defaultImg}>没有图片</div>}
         </div>
-        <Button className={styles.lastNextBtn} disabled={!images[imgIdx]} onClick={()=>{setAnchorMode(anchorMode==='area'?'polygon':'area');}}>{anchorMode==='area'?'矩形模型':'多边形模式'}</Button>
-        <Button className={styles.lastNextBtn} disabled={imgIdx <= 0} onClick={()=>{setImgIdx(imgIdx-1);}}>上一张</Button>
-        <Button className={styles.lastNextBtn} disabled={imgIdx >= (images.length - 1)} onClick={()=>{setImgIdx(imgIdx+1);}}>下一张</Button>
+        <Button className={styles.lastNextBtn} disabled={!images[imgIdx]} onClick={()=>{setAnchorMode(anchorMode==='area'?'polygon':'area');}}>{anchorMode==='area'?'矩形':'多边形'}</Button>
+        <Button className={styles.lastNextBtn} disabled={imgIdx <= 0} onClick={()=>{setImgIdx(imgIdx-1);}}>上张</Button>
+        <Button className={styles.lastNextBtn} disabled={imgIdx >= (images.length - 1)} onClick={()=>{setImgIdx(imgIdx+1);}}>下张</Button>
       </div>
       <div className={styles.classResultBox}>
         <h2>标注结果</h2>
