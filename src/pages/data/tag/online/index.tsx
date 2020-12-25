@@ -120,7 +120,11 @@ function TagOnline(localState: any) {
         if (ev.button === 1) {
           delPoints(points, x, y);
         } else if (ev.button === 0) {
-          points.push(`${x},${y}`);
+          if (ev.ctrlKey) {
+            addPoints(points, x, y);
+          } else {
+            points.push(`${x},${y}`);
+          }
         }
         setPoints([...points]);
         setImgInfo('points', points2ImgPoints(points));
@@ -146,6 +150,25 @@ function TagOnline(localState: any) {
     if (minIdx !== undefined) {
       points.splice(minIdx, 1);
     }
+    return points;
+  }
+  function addPoints(points, x, y) {
+    let minD = Infinity;
+    let minIdx;
+    for (let i = 0; i < points.length; i++) {
+      const p = points[i].split(',');
+      const pX = Number(p[0]);
+      const pY = Number(p[1]);
+      const d = (pX - x)** 2 + (pY - y) ** 2;
+      if (d < minD) {
+        minD = d;
+        minIdx = i;
+      }
+    }
+    if (minIdx !== undefined) {
+      points.splice(minIdx, 0, `${x},${y}`);
+      // return [...points.slice(0, minIdx), `${x},${y}`, ...points.slice(minIdx, points.length)];
+    };
     return points;
   }
 
