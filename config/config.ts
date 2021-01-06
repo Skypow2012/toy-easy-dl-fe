@@ -86,7 +86,11 @@ export default defineConfig({
                 name: 'create',
                 path: '/model/create',
                 component: './model/create',
-              },
+              },{
+                name: 'viewCreate',
+                path: '/data/viewCreate',
+                component: './data/viewCreate',
+              }, 
               // {
               //   name: 'train',
               //   path: '/model/train',
@@ -96,11 +100,21 @@ export default defineConfig({
                 name: 'infer',
                 path: '/model/infer',
                 component: './model/infer',
+                hideInMenu: true,
               },
               {
                 name: 'paramInfer',
                 path: '/model/paramInfer',
                 component: './model/paramInfer',
+                hideInMenu: true,
+                // 不展示顶栏
+                headerRender: false,
+                // 不展示页脚
+                footerRender: false,
+                // 不展示菜单
+                menuRender: false,
+                // 不展示菜单顶栏
+                menuHeaderRender: false,
               },
               {
                 name: 'push',

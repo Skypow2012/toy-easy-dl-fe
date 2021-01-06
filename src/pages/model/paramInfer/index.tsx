@@ -109,6 +109,7 @@ function CardList(localState: any) {
   }
   function getBase64(num) {
     const img = document.getElementById(`img-0${num}`);
+    img.crossOrigin = 'anonymous';
     const cvs = document.createElement('canvas');
     const ctx = cvs.getContext('2d');
     cvs.width = 32;
@@ -149,7 +150,7 @@ function CardList(localState: any) {
     });
   }
 
-  return <PageContainer content={modelInfo.modelName}>
+  return <div content={modelInfo.modelName}>
     <Card>
       <div className={styles.inferBox}>
         <h2>待识别图片</h2>
@@ -194,7 +195,7 @@ function CardList(localState: any) {
           <p>{matchResult !== undefined ? (matchResult ? '匹配成功' : '匹配失败') : ''}</p>
         </div> : null
       }
-      <p className={styles.inferCtrl}>
+      <div className={styles.inferCtrl}>
         <Spin
           spinning={loading}
         >
@@ -211,9 +212,9 @@ function CardList(localState: any) {
             dispatch({type: "modelParamInfer/setLoading", payload: false});
           }
         }}>开始识别</Button></Spin>
-      </p>
+      </div>
     </Card>
-  </PageContainer>;
+  </div>;
 }
 
 function mapStateToProps(state: any) {

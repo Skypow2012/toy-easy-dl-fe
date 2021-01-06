@@ -2,6 +2,7 @@ export default {
   'menu.model': '模型中心',
   'menu.model.my': '我的模型',
   'menu.model.create': '创建模型',
+  'menu.model.viewCreate': '可视化建模',
   'menu.model.train': '训练模型',
   'menu.model.infer': '验证模型',
   'menu.model.paramInfer': '验证参数模型',

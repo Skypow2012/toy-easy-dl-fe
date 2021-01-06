@@ -1,3 +1,4 @@
+import defaultSettings from '../../../../config/defaultSettings';
 import { PlusOutlined, CopyOutlined } from '@ant-design/icons';
 import { Button, Card, List, Typography, message } from 'antd';
 import React, { Component } from 'react';
@@ -114,9 +115,9 @@ class CardList extends Component<CardListProps, CardListState> {
                       className={styles.card}
                       actions={[
                         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                        <a key="option1" onClick={()=>{ item.isPublish ? null : this.editItem(item);}} style={{color: item.isPublish ? "#cccccc" : "#1890ff"}}><FormattedMessage id="normal.edit"/></a>,
-                        <a key="option2" onClick={()=>{ window.location.href = `/toy-easy-dl-fe/model/paramInfer/?type=param&modelName=${item.modelName}`; }} style={{color: "#1890ff"}}><FormattedMessage id="normal.preview"/></a>,
-                        <a key="option3" onClick={()=>{this.updateItem(item, {isPublish: !item.isPublish});}} style={{color: "#1890ff"}}>{item.isPublish?<FormattedMessage id="normal.turnOff"/>:<FormattedMessage id="normal.publish"/>}</a>,
+                        <a key="option1" onClick={()=>{ item.isPublish ? null : this.editItem(item);}} style={{color: item.isPublish ? "#cccccc" : defaultSettings.primaryColor}}><FormattedMessage id="normal.edit"/></a>,
+                        <a key="option2" onClick={()=>{ window.open(`/toy-easy-dl-fe/model/paramInfer/?type=param&modelName=${item.modelName}`); }} style={{color: defaultSettings.primaryColor}}><FormattedMessage id="normal.preview"/></a>,
+                        <a key="option3" onClick={()=>{this.updateItem(item, {isPublish: !item.isPublish});}} style={{color: defaultSettings.primaryColor}}>{item.isPublish?<FormattedMessage id="normal.turnOff"/>:<FormattedMessage id="normal.publish"/>}</a>,
                         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                         <a key="option4" onClick={()=>{item.isPublish ? null : this.deleteItem(item);}} style={{color: item.isPublish ? "#cccccc" : "#ff0000"}}><FormattedMessage id="normal.delete"/></a>
                       ]}
