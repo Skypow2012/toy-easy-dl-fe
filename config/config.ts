@@ -89,7 +89,7 @@ export default defineConfig({
               },{
                 name: 'viewCreate',
                 path: '/data/viewCreate',
-                component: './data/viewCreate',
+                // component: './data/viewCreate',
               }, 
               // {
               //   name: 'train',

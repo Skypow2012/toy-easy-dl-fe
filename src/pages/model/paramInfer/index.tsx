@@ -115,6 +115,9 @@ function CardList(localState: any) {
     cvs.width = 32;
     cvs.height = 32;
     ctx.drawImage(img, 0, 0, 32, 32);
+    // cvs.width = img.width;
+    // cvs.height = img.height;
+    // ctx.drawImage(img, 0, 0, img.width, img.height);
     const base64 = cvs.toDataURL();
     return base64;
   }
