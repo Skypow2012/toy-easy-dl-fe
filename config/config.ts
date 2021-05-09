@@ -2,7 +2,7 @@
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
-const { REACT_APP_ENV, PUBLIC_PATH ='/toy-easy-dl-fe/' } = process.env;
+const { REACT_APP_ENV, PUBLIC_PATH = '/toy-easy-dl-fe/' } = process.env;
 export default defineConfig({
   hash: true,
   antd: {},
@@ -75,98 +75,115 @@ export default defineConfig({
               redirect: '/model/my',
             },
             {
+              path: '/demo',
+              component: './demo',
+            },
+            {
               path: '/model',
               name: 'model',
               icon: 'dashboard',
-              routes: [{
-                name: 'my',
-                path: '/model/my',
-                component: './model/my',
-              }, {
-                name: 'create',
-                path: '/model/create',
-                component: './model/create',
-              },{
-                name: 'viewCreate',
-                path: '/data/viewCreate',
-                // component: './data/viewCreate',
-              }, 
-              // {
-              //   name: 'train',
-              //   path: '/model/train',
-              //   component: './model/train',
-              // },
-              {
-                name: 'infer',
-                path: '/model/infer',
-                component: './model/infer',
-                hideInMenu: true,
-              },
-              {
-                name: 'paramInfer',
-                path: '/model/paramInfer',
-                component: './model/paramInfer',
-                hideInMenu: true,
-                // 不展示顶栏
-                headerRender: false,
-                // 不展示页脚
-                footerRender: false,
-                // 不展示菜单
-                menuRender: false,
-                // 不展示菜单顶栏
-                menuHeaderRender: false,
-              },
-              {
-                name: 'push',
-                path: '/model/push',
-                component: './model/push',
-              },]
+              routes: [
+                {
+                  name: 'my',
+                  path: '/model/my',
+                  component: './model/my',
+                },
+                {
+                  name: 'create',
+                  path: '/model/create',
+                  component: './model/create',
+                },
+                {
+                  name: 'viewCreate',
+                  path: '/data/viewCreate',
+                  // component: './data/viewCreate',
+                },
+                // {
+                //   name: 'train',
+                //   path: '/model/train',
+                //   component: './model/train',
+                // },
+                {
+                  name: 'infer',
+                  path: '/model/infer',
+                  component: './model/infer',
+                  hideInMenu: true,
+                },
+                {
+                  name: 'paramInfer',
+                  path: '/model/paramInfer',
+                  component: './model/paramInfer',
+                  hideInMenu: true,
+                  // 不展示顶栏
+                  headerRender: false,
+                  // 不展示页脚
+                  footerRender: false,
+                  // 不展示菜单
+                  menuRender: false,
+                  // 不展示菜单顶栏
+                  menuHeaderRender: false,
+                },
+                {
+                  name: 'push',
+                  path: '/model/push',
+                  component: './model/push',
+                },
+              ],
             },
             {
               path: '/data',
               name: 'data',
               icon: 'form',
-              routes: [{
-                name: 'show',
-                path: '/data/show',
-                component: './data/show',
-              }, {
-              //   name: 'tag-manage',
-              //   path: '/data/tag/manage',
-              //   // component: './data/tag/manage',
-              // }, {
-                name: 'tag-online',
-                path: '/data/tag/online',
-                component: './data/tag/online',
-              }, {
-                name: 'cloud',
-                path: '/data/cloud',
-                // component: './data/cloud',
-              }]
+              routes: [
+                {
+                  name: 'show',
+                  path: '/data/show',
+                  component: './data/show',
+                },
+                {
+                  //   name: 'tag-manage',
+                  //   path: '/data/tag/manage',
+                  //   // component: './data/tag/manage',
+                  // }, {
+                  name: 'tag-online',
+                  path: '/data/tag/online',
+                  component: './data/tag/online',
+                },
+                {
+                  name: 'cloud',
+                  path: '/data/cloud',
+                  // component: './data/cloud',
+                },
+              ],
             },
             {
               path: '/deployment',
               name: 'deployment',
               icon: 'CheckCircleOutlined',
-              routes: [{
-                name: 'local',
-                path: '/deployment/local',
-                // component: './deployment/local',
-              }]
+              routes: [
+                {
+                  name: 'local',
+                  path: '/deployment/local',
+                  // component: './deployment/local',
+                },
+              ],
             },
             {
               path: '/ai-market',
               name: 'ai-market',
               icon: 'RobotOutlined',
-              routes: [{
-                name: 'my',
-                path: '/ai-market/my',
-                // component: './ai/my',
-              }, {
-                name: 'sell',
-                path: '/ai-market/sell',
-                // component: './ai/sell',
-              }]
+              routes: [
+                {
+                  name: 'my',
+                  path: '/ai-market/my',
+                  // component: './ai/my',
+                },
+                {
+                  name: 'sell',
+                  path: '/ai-market/sell',
+                  // component: './ai/sell',
+                },
+              ],
             },
             {
               name: 'account',
